@@ -841,7 +841,7 @@
 
 <script>
 (function () {
-    var URL_ENVIO = 'https://formsubmit.co/ajax/adilsonrafael847@gmail.com';
+    var CHAVE = '799f0f80-15d6-4f0a-8435-0fb8691490c5';
     document.addEventListener('submit', function (e) {
         var f = e.target;
         if (!f || f.id !== 'formContacto') return;
@@ -851,21 +851,21 @@
         var original = b.textContent;
         b.disabled = true;
         b.textContent = 'A enviar...';
-        fetch(URL_ENVIO, {
+        fetch('https://api.web3forms.com/submit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
             body: JSON.stringify({
+                access_key: CHAVE,
                 name: f.nome.value,
                 email: f.email.value,
-                _subject: f.assunto.value,
+                subject: f.assunto.value,
                 message: f.mensagem.value,
-                _template: 'table',
-                _captcha: 'false'
+                from_name: 'Portfólio'
             })
         })
             .then(function (r) { return r.json(); })
             .then(function (d) {
-                if (d.success === true || d.success === 'true') {
+                if (d.success) {
                     f.reset();
                     b.textContent = 'Mensagem enviada';
                 } else {
@@ -873,31 +873,8 @@
                 }
             })
             .catch(function (err) {
-                if (err instanceof TypeError) {
-                    // falha de rede/CORS: envio clássico por formulário oculto
-                    var fr = document.createElement('iframe');
-                    fr.name = 'envioOculto';
-                    fr.style.display = 'none';
-                    document.body.appendChild(fr);
-                    var hf = document.createElement('form');
-                    hf.method = 'POST';
-                    hf.action = 'https://formsubmit.co/adilsonrafael847@gmail.com';
-                    hf.target = 'envioOculto';
-                    var campos = { name: f.nome.value, email: f.email.value, _subject: f.assunto.value, message: f.mensagem.value, _template: 'table', _captcha: 'false' };
-                    Object.keys(campos).forEach(function (k) {
-                        var i = document.createElement('input');
-                        i.type = 'hidden'; i.name = k; i.value = campos[k];
-                        hf.appendChild(i);
-                    });
-                    document.body.appendChild(hf);
-                    hf.submit();
-                    f.reset();
-                    b.textContent = 'Mensagem enviada';
-                    setTimeout(function () { hf.remove(); fr.remove(); }, 10000);
-                } else {
-                    b.textContent = 'Erro';
-                    alert('Erro ao enviar: ' + (err && err.message ? err.message : 'tente novamente'));
-                }
+                b.textContent = 'Erro ao enviar';
+                alert('Erro ao enviar: ' + (err && err.message ? err.message : 'tente novamente'));
             })
             .then(function () {
                 setTimeout(function () { b.textContent = original; b.disabled = false; }, 3500);
