@@ -383,7 +383,8 @@
         }
 
         /* --- PROJETOS EM TELA CHEIA --- */
-        html, body { overflow-x: hidden; }
+        html { overflow-x: hidden; }
+        body { overflow-x: clip; }
 
         #projetos { margin: -50px calc(50% - 50vw) 0; }
 
@@ -579,6 +580,114 @@
             .topo .nav { left: auto; width: 260px; border-radius: 0 0 0 16px; }
         }
 
+        /* --- PAINEL DE DETALHES (README do repositorio) --- */
+        .md-painel {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: var(--bg);
+            display: none;
+            flex-direction: column;
+        }
+
+        .md-painel.aberto { display: flex; animation: fadeIn 0.25s ease; }
+
+        .md-topo {
+            height: 58px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0 8px;
+            background: var(--surface);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .md-topo button {
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: none;
+            font-size: 24px;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        .md-topo button { display: flex; align-items: center; justify-content: center; }
+
+        .md-titulo {
+            flex: 1;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .md-corpo {
+            flex: 1;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+            padding: 26px max(18px, calc(50vw - 380px)) 70px;
+            font-size: 17px;
+            word-wrap: break-word;
+        }
+
+        .md-corpo h1, .md-corpo h2, .md-corpo h3, .md-corpo h4, .md-corpo h5, .md-corpo h6 {
+            color: var(--primary);
+            margin: 26px 0 10px;
+            line-height: 1.3;
+        }
+
+        .md-corpo h1 { font-size: 30px; padding-bottom: 8px; border-bottom: 1px solid #d8d2c2; margin-top: 0; }
+        .md-corpo h2 { font-size: 24px; padding-bottom: 6px; border-bottom: 1px solid #d8d2c2; }
+        .md-corpo h3 { font-size: 20px; }
+        .md-corpo p { margin-bottom: 14px; }
+        .md-corpo a { color: var(--secondary); text-decoration: underline; }
+        .md-corpo img { max-width: 100%; height: auto; border-radius: 8px; }
+        .md-corpo hr { border: none; border-top: 1px solid #d8d2c2; margin: 22px 0; }
+        .md-corpo del { opacity: 0.7; }
+
+        .md-corpo blockquote {
+            border-left: 4px solid var(--secondary);
+            padding: 2px 0 2px 14px;
+            margin: 0 0 14px;
+            color: var(--text-light);
+        }
+
+        .md-corpo code {
+            font-family: ui-monospace, Menlo, Consolas, monospace;
+            font-size: 0.88em;
+            background: #e6e0d2;
+            padding: 1px 6px;
+            border-radius: 5px;
+        }
+
+        .md-corpo pre {
+            background: #0d1117;
+            color: #c9d1d9;
+            padding: 14px 16px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin-bottom: 16px;
+        }
+
+        .md-corpo pre code { background: none; padding: 0; color: inherit; font-size: 14px; }
+
+        .md-corpo .md-l { margin: 0 0 14px 22px; }
+        .md-corpo .md-l li { margin-bottom: 4px; }
+        .md-corpo .md-pasta { list-style: none; margin-left: 0; }
+        .md-corpo .md-pasta li { padding: 10px 0; border-bottom: 1px solid #d8d2c2; }
+
+        .md-corpo .md-tab { overflow-x: auto; margin-bottom: 16px; }
+        .md-corpo table { border-collapse: collapse; min-width: 100%; }
+        .md-corpo th, .md-corpo td { border: 1px solid #d8d2c2; padding: 7px 12px; text-align: left; }
+        .md-corpo th { background: var(--surface); }
+
+        .md-info { color: var(--text-light); }
+
         /* --- RESPONSIVO --- */
         @media (max-width: 600px) {
             .nav { gap: 12px; }
@@ -675,7 +784,7 @@
                                 <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.15 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.62.24 2.85.12 3.15.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                                 GitHub
                             </a>
-                            <a href="https://github.com/adilson889/SIRE/blob/main/README.md">
+                            <a href="https://github.com/adilson889/SIRE/blob/main/README.md" data-readme="adilson889/SIRE@main">
                                 <svg class="icon-svg" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zM6 20V4h7v5h5v11H6z"/></svg>
                                 Detalhes
                             </a>
@@ -827,6 +936,268 @@ function irPara(i) {
         if (!nav.contains(e.target)) fechar();
     });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') fechar(); });
+})();
+</script>
+
+<script>
+(function () {
+    var painel = null, corpo, titulo, pilha = [], seq = 0;
+    var SEP = /^\s*\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)+\|?\s*$/;
+    var BLOCO = /^(#{1,6}\s|```|\s*>|\s*([-*+]|\d+[.)])\s)/;
+
+    function esc(t) {
+        return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function des(t) {
+        return t.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+    }
+    function slug(t) {
+        return t.toLowerCase().replace(/[*_`~]/g, '').replace(/[^\p{L}\p{N}\s-]/gu, '').trim().replace(/\s+/g, '-');
+    }
+    function dirDe(p) {
+        return p.indexOf('/') < 0 ? '' : p.replace(/[^\/]*$/, '');
+    }
+    function resolver(dir, href) {
+        var u = new URL(href, 'https://r.local/' + dir);
+        return decodeURIComponent(u.pathname.replace(/^\//, ''));
+    }
+
+    function linkHtml(txt, href, ctx) {
+        href = href.trim();
+        var m = href.match(/^https?:\/\/github\.com\/([^\/]+\/[^\/]+)\/(blob|tree)\/([^\/]+)\/(.*)$/i);
+        if (m && m[1].toLowerCase() === ctx.repo.toLowerCase() && m[3] === ctx.branch) {
+            var pp = decodeURIComponent(m[4].split('#')[0]);
+            return '<a href="#" data-int="' + esc(pp) + '" data-dir="' + (m[2].toLowerCase() === 'tree' ? 1 : 0) + '">' + txt + '</a>';
+        }
+        if (/^(https?:|mailto:)/i.test(href)) return '<a href="' + esc(href) + '" target="_blank" rel="noopener">' + txt + '</a>';
+        if (href.charAt(0) === '#') return '<a href="#" data-ancora="' + esc(href.slice(1)) + '">' + txt + '</a>';
+        if (/^[a-z][a-z0-9+.-]*:/i.test(href)) return txt;
+        var base = href.split('#')[0];
+        var p = resolver(ctx.dir, base);
+        var dir = /\/$/.test(base) || base === '' || !/\.[a-z0-9]+$/i.test(p);
+        if (!dir && !/\.(md|markdown|txt)$/i.test(p)) {
+            return '<a href="https://github.com/' + ctx.repo + '/blob/' + ctx.branch + '/' + encodeURI(p) + '" target="_blank" rel="noopener">' + txt + '</a>';
+        }
+        return '<a href="#" data-int="' + esc(p) + '" data-dir="' + (dir ? 1 : 0) + '">' + txt + '</a>';
+    }
+
+    function imgHtml(alt, src, ctx) {
+        src = src.trim();
+        var url;
+        if (/^https?:\/\//i.test(src)) url = src;
+        else if (/^[a-z][a-z0-9+.-]*:/i.test(src)) return '';
+        else url = 'https://raw.githubusercontent.com/' + ctx.repo + '/' + ctx.branch + '/' + encodeURI(resolver(ctx.dir, src.split('#')[0]));
+        return '<img src="' + esc(url) + '" alt="' + esc(alt) + '" loading="lazy">';
+    }
+
+    function inline(t, ctx) {
+        var cod = [], guard = [];
+        function g(h) { guard.push(h); return '\u0003' + (guard.length - 1) + '\u0003'; }
+        t = t.replace(/`([^`]+)`/g, function (_, c) { cod.push(c); return '\u0000' + (cod.length - 1) + '\u0000'; });
+        t = esc(t);
+        t = t.replace(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+&quot;.*?&quot;)?\)/g, function (_, a, s) {
+            return g(imgHtml(des(a), des(s), ctx));
+        });
+        t = t.replace(/\[([^\]]+)\]\(([^)\s]+)(?:\s+&quot;.*?&quot;)?\)/g, function (_, a, s) {
+            return g(linkHtml(a, des(s), ctx));
+        });
+        t = t.replace(/(^|[\s(])(https?:\/\/[^\s<)]+)/g, function (_, p, u) {
+            return p + g('<a href="' + u + '" target="_blank" rel="noopener">' + u + '</a>');
+        });
+        t = t.replace(/\*\*([^*]+)\*\*|__([^_]+)__/g, function (_, a, b) { return '<strong>' + (a || b) + '</strong>'; });
+        t = t.replace(/\*([^*\s][^*]*)\*/g, '<em>$1</em>');
+        t = t.replace(/(^|[\s(])_([^_]+)_(?=[\s).,;:!?]|$)/g, '$1<em>$2</em>');
+        t = t.replace(/~~([^~]+)~~/g, '<del>$1</del>');
+        var n = 0;
+        while (/\u0003\d+\u0003/.test(t) && n++ < 5) {
+            t = t.replace(/\u0003(\d+)\u0003/g, function (_, i) { return guard[+i]; });
+        }
+        return t.replace(/\u0000(\d+)\u0000/g, function (_, i) { return '<code>' + esc(cod[+i]) + '</code>'; });
+    }
+
+    function lista(items, ord, ctx) {
+        var tag = ord ? 'ol' : 'ul';
+        return '<' + tag + ' class="md-l">' + items.map(function (it) {
+            return '<li style="margin-left:' + (it.d * 1.3) + 'rem">' + inline(it.t, ctx) + '</li>';
+        }).join('') + '</' + tag + '>';
+    }
+
+    function blocos(md, ctx) {
+        var L = md.split('\n'), out = [], i = 0;
+        while (i < L.length) {
+            var l = L[i], m;
+            if (/^```/.test(l)) {
+                var b = [];
+                i++;
+                while (i < L.length && !/^```/.test(L[i])) { b.push(L[i]); i++; }
+                i++;
+                out.push('<pre><code>' + esc(b.join('\n')) + '</code></pre>');
+                continue;
+            }
+            if ((m = l.match(/^(#{1,6})\s+(.*?)\s*#*\s*$/))) {
+                var n = m[1].length;
+                out.push('<h' + n + ' id="' + esc(slug(m[2])) + '">' + inline(m[2], ctx) + '</h' + n + '>');
+                i++;
+                continue;
+            }
+            if (/^\s*([-*_])\s*(\1\s*){2,}$/.test(l)) { out.push('<hr>'); i++; continue; }
+            if (/^\s*>/.test(l)) {
+                var q = [];
+                while (i < L.length && /^\s*>/.test(L[i])) { q.push(L[i].replace(/^\s*>\s?/, '')); i++; }
+                out.push('<blockquote>' + blocos(q.join('\n'), ctx) + '</blockquote>');
+                continue;
+            }
+            if (l.indexOf('|') > -1 && i + 1 < L.length && SEP.test(L[i + 1])) {
+                var cel = function (r) { return r.replace(/^\s*\|/, '').replace(/\|\s*$/, '').split('|'); };
+                var th = cel(l).map(function (c) { return '<th>' + inline(c.trim(), ctx) + '</th>'; }).join('');
+                i += 2;
+                var rows = [];
+                while (i < L.length && L[i].trim() && L[i].indexOf('|') > -1) {
+                    rows.push('<tr>' + cel(L[i]).map(function (c) { return '<td>' + inline(c.trim(), ctx) + '</td>'; }).join('') + '</tr>');
+                    i++;
+                }
+                out.push('<div class="md-tab"><table><thead><tr>' + th + '</tr></thead><tbody>' + rows.join('') + '</tbody></table></div>');
+                continue;
+            }
+            if ((m = l.match(/^(\s*)([-*+]|\d+[.)])\s+(.*)$/))) {
+                var items = [], ord = /\d/.test(m[2]);
+                while (i < L.length) {
+                    var m2 = L[i].match(/^(\s*)([-*+]|\d+[.)])\s+(.*)$/);
+                    if (m2) { items.push({ d: Math.floor(m2[1].length / 2), t: m2[3] }); i++; }
+                    else if (items.length && /^\s+\S/.test(L[i])) { items[items.length - 1].t += ' ' + L[i].trim(); i++; }
+                    else break;
+                }
+                out.push(lista(items, ord, ctx));
+                continue;
+            }
+            if (!l.trim()) { i++; continue; }
+            var p = [];
+            while (i < L.length && L[i].trim() && !BLOCO.test(L[i]) && !(L[i].indexOf('|') > -1 && i + 1 < L.length && SEP.test(L[i + 1]))) {
+                p.push(L[i]);
+                i++;
+            }
+            if (!p.length) { p.push(L[i]); i++; }
+            out.push('<p>' + inline(p.join(' '), ctx) + '</p>');
+        }
+        return out.join('\n');
+    }
+
+    function markdown(md, ctx) {
+        md = md.replace(/\r/g, '');
+        var partes = md.split(/(^```[^\n]*\n[\s\S]*?^```[ \t]*$)/m);
+        for (var k = 0; k < partes.length; k += 2) {
+            partes[k] = partes[k]
+                .replace(/<!--[\s\S]*?-->/g, '')
+                .replace(/<img\b[^>]*>/gi, function (m) {
+                    var s = (m.match(/src\s*=\s*["']([^"']+)["']/i) || [])[1];
+                    var a = (m.match(/alt\s*=\s*["']([^"']*)["']/i) || [])[1] || '';
+                    return s ? '![' + a + '](' + s + ')' : '';
+                })
+                .replace(/<br\s*\/?>/gi, '\n')
+                .replace(/<\/?[a-z][^>]*>/gi, '');
+        }
+        return blocos(partes.join(''), ctx);
+    }
+
+    function criar() {
+        painel = document.createElement('div');
+        painel.className = 'md-painel';
+        painel.innerHTML = '<div class="md-topo"><button type="button" class="md-voltar" aria-label="Voltar"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></button>' +
+            '<span class="md-titulo"></span><button type="button" class="md-fechar" aria-label="Fechar"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>' +
+            '<div class="md-corpo"></div>';
+        document.body.appendChild(painel);
+        corpo = painel.querySelector('.md-corpo');
+        titulo = painel.querySelector('.md-titulo');
+        painel.querySelector('.md-voltar').onclick = function () { history.back(); };
+        painel.querySelector('.md-fechar').onclick = function () {
+            if (pilha.length) history.go(-pilha.length); else fechar();
+        };
+        corpo.addEventListener('click', function (e) {
+            var a = e.target.closest ? e.target.closest('a') : null;
+            if (!a) return;
+            if (a.dataset.int !== undefined) {
+                e.preventDefault();
+                ir(a.dataset.int, a.dataset.dir === '1');
+            } else if (a.dataset.ancora !== undefined) {
+                e.preventDefault();
+                var alvo = a.dataset.ancora.toLowerCase();
+                var els = corpo.querySelectorAll('[id]');
+                for (var j = 0; j < els.length; j++) {
+                    if (els[j].id === alvo) { els[j].scrollIntoView(); break; }
+                }
+            }
+        });
+    }
+
+    function fechar() {
+        if (painel) painel.classList.remove('aberto');
+        pilha = [];
+    }
+
+    function abrir(repo, branch) {
+        if (!painel) criar();
+        pilha = [{ repo: repo, branch: branch, path: 'README.md', dir: false }];
+        history.pushState({ nl: 1 }, '');
+        painel.classList.add('aberto');
+        carregar();
+    }
+
+    function ir(path, dir) {
+        var a = pilha[pilha.length - 1];
+        pilha.push({ repo: a.repo, branch: a.branch, path: path, dir: dir });
+        history.pushState({ nl: pilha.length }, '');
+        carregar();
+    }
+
+    function erro(a) {
+        corpo.innerHTML = '<p class="md-info">Não foi possível carregar o conteúdo.</p>' +
+            '<p><a href="https://github.com/' + a.repo + '/blob/' + a.branch + '/' + encodeURI(a.path) + '" target="_blank" rel="noopener">Abrir no GitHub</a></p>';
+    }
+
+    function carregar() {
+        var a = pilha[pilha.length - 1], id = ++seq;
+        titulo.textContent = a.repo.split('/')[1] + (a.path && a.path !== 'README.md' ? ' / ' + a.path : '');
+        corpo.innerHTML = '<p class="md-info">A carregar...</p>';
+        corpo.scrollTop = 0;
+        if (a.dir) {
+            fetch('https://api.github.com/repos/' + a.repo + '/contents/' + encodeURI(a.path) + '?ref=' + encodeURIComponent(a.branch))
+                .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+                .then(function (lst) {
+                    if (id !== seq) return;
+                    lst.sort(function (x, y) { return (x.type === 'dir' ? 0 : 1) - (y.type === 'dir' ? 0 : 1) || x.name.localeCompare(y.name); });
+                    corpo.innerHTML = '<ul class="md-l md-pasta">' + lst.map(function (f) {
+                        if (f.type === 'dir') return '<li><a href="#" data-int="' + esc(f.path) + '" data-dir="1">' + esc(f.name) + '/</a></li>';
+                        if (/\.(md|markdown|txt)$/i.test(f.name)) return '<li><a href="#" data-int="' + esc(f.path) + '" data-dir="0">' + esc(f.name) + '</a></li>';
+                        return '<li><a href="' + esc(f.html_url) + '" target="_blank" rel="noopener">' + esc(f.name) + '</a></li>';
+                    }).join('') + '</ul>';
+                })
+                .catch(function () { if (id === seq) erro(a); });
+            return;
+        }
+        fetch('https://raw.githubusercontent.com/' + a.repo + '/' + a.branch + '/' + encodeURI(a.path))
+            .then(function (r) { if (!r.ok) throw 0; return r.text(); })
+            .then(function (txt) {
+                if (id !== seq) return;
+                if (/\.(md|markdown)$/i.test(a.path)) corpo.innerHTML = markdown(txt, { repo: a.repo, branch: a.branch, dir: dirDe(a.path) });
+                else corpo.innerHTML = '<pre><code>' + esc(txt) + '</code></pre>';
+            })
+            .catch(function () { if (id === seq) erro(a); });
+    }
+
+    window.addEventListener('popstate', function (e) {
+        if (!painel || !painel.classList.contains('aberto')) return;
+        var n = (e.state && e.state.nl) || 0;
+        if (n < 1 || n > pilha.length) fechar();
+        else { pilha.length = n; carregar(); }
+    });
+
+    document.addEventListener('click', function (e) {
+        var a = e.target.closest ? e.target.closest('a[data-readme]') : null;
+        if (!a) return;
+        e.preventDefault();
+        var p = a.getAttribute('data-readme').split('@');
+        abrir(p[0], p[1] || 'main');
+    });
 })();
 </script>
 
