@@ -391,8 +391,8 @@
 
         #projetos .cartao-projeto.destaque {
             width: 100%;
-            height: calc(100vh - 88px);
-            height: calc(100dvh - 88px);
+            height: calc(100vh - var(--topo-h));
+            height: calc(100dvh - var(--topo-h));
             min-height: 480px;
             border-radius: 0;
             box-shadow: none;
@@ -420,8 +420,8 @@
         }
 
         .hero {
-            min-height: calc(100vh - 88px);
-            min-height: calc(100dvh - 88px);
+            min-height: calc(100vh - var(--topo-h));
+            min-height: calc(100dvh - var(--topo-h));
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -509,6 +509,76 @@
 
         .footer-text { margin-top: 0; padding: 26px 0; background: var(--surface); }
 
+        /* --- TOPO COM HAMBURGUER --- */
+        :root { --topo-h: 62px; }
+
+        .topo {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: var(--topo-h);
+            background: var(--surface);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 12px 0 22px;
+        }
+
+        .topo .marca { font-weight: 700; font-size: 21px; color: var(--primary); }
+
+        .burger {
+            background: none;
+            border: none;
+            width: 46px;
+            height: 46px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .burger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            border-radius: 2px;
+            background: var(--primary);
+            transition: transform 0.3s, opacity 0.2s;
+        }
+
+        .burger.aberto span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .burger.aberto span:nth-child(2) { opacity: 0; }
+        .burger.aberto span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        .topo .nav {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            display: none;
+            flex-direction: column;
+            gap: 0;
+            padding: 8px 12px 12px;
+            background: var(--surface);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .topo .nav.aberto { display: flex; animation: fadeIn 0.25s ease; }
+
+        .topo .nav button {
+            width: 100%;
+            text-align: left;
+            font-size: 20px;
+            padding: 14px 16px;
+        }
+
+        @media (min-width: 700px) {
+            .topo .nav { left: auto; width: 260px; border-radius: 0 0 0 16px; }
+        }
+
         /* --- RESPONSIVO --- */
         @media (max-width: 600px) {
             .nav { gap: 12px; }
@@ -527,11 +597,15 @@
 </head>
 <body>
 
-    <nav class="nav">
+    <header class="topo">
+        <span class="marca">Adilson C. Rafael</span>
+        <button type="button" class="burger" id="burger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <nav class="nav" id="menuNav">
         <button class="ativo" onclick="abrirAba('inicio', this)">Início</button>
         <button onclick="abrirAba('projetos', this)">Projetos</button>
         <button onclick="abrirAba('contacto', this)">Contacto</button>
     </nav>
+    </header>
 
     <div class="container">
 
@@ -689,7 +763,33 @@
                     throw new Error(d.message || 'falha');
                 }
             })
-            .catch(function (err) { b.textContent = 'Erro'; alert('Erro ao enviar: ' + (err && err.message ? err.message : 'sem ligação ou página aberta como ficheiro')); })
+            .catch(function (err) {
+                if (err instanceof TypeError) {
+                    // falha de rede/CORS: envio clássico por formulário oculto
+                    var fr = document.createElement('iframe');
+                    fr.name = 'envioOculto';
+                    fr.style.display = 'none';
+                    document.body.appendChild(fr);
+                    var hf = document.createElement('form');
+                    hf.method = 'POST';
+                    hf.action = 'https://formsubmit.co/adilsonrafael847@gmail.com';
+                    hf.target = 'envioOculto';
+                    var campos = { name: f.nome.value, email: f.email.value, _subject: f.assunto.value, message: f.mensagem.value, _template: 'table', _captcha: 'false' };
+                    Object.keys(campos).forEach(function (k) {
+                        var i = document.createElement('input');
+                        i.type = 'hidden'; i.name = k; i.value = campos[k];
+                        hf.appendChild(i);
+                    });
+                    document.body.appendChild(hf);
+                    hf.submit();
+                    f.reset();
+                    b.textContent = 'Mensagem enviada';
+                    setTimeout(function () { hf.remove(); fr.remove(); }, 10000);
+                } else {
+                    b.textContent = 'Erro';
+                    alert('Erro ao enviar: ' + (err && err.message ? err.message : 'tente novamente'));
+                }
+            })
             .then(function () {
                 setTimeout(function () { b.textContent = original; b.disabled = false; }, 3500);
             });
@@ -704,6 +804,30 @@ function irPara(i) {
     abrirAba(ids[i], bt);
     window.scrollTo(0, 0);
 }
+</script>
+
+<script>
+(function () {
+    var bg = document.getElementById('burger');
+    var nav = document.getElementById('menuNav');
+    function fechar() {
+        nav.classList.remove('aberto');
+        bg.classList.remove('aberto');
+        bg.setAttribute('aria-expanded', 'false');
+    }
+    bg.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var abre = !nav.classList.contains('aberto');
+        nav.classList.toggle('aberto', abre);
+        bg.classList.toggle('aberto', abre);
+        bg.setAttribute('aria-expanded', abre ? 'true' : 'false');
+    });
+    nav.addEventListener('click', function () { setTimeout(fechar, 0); });
+    document.addEventListener('click', function (e) {
+        if (!nav.contains(e.target)) fechar();
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') fechar(); });
+})();
 </script>
 
 </body>
