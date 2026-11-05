@@ -727,6 +727,24 @@
         .pontos { display: flex; justify-content: center; gap: 7px; margin-top: 16px; }
         .pontos button { width: 8px; height: 8px; padding: 0; border-radius: 4px; border: 0; background: #ffffff55; cursor: pointer; transition: all 0.25s; }
         .pontos button.ativo { width: 22px; background: #3b82f6; }
+    
+        .sobre-novo { background: linear-gradient(160deg, #1e3a8a 0%, #17306f 55%, #0f1f4d 100%); color: #e8eefc; }
+        .sobre-novo h2 { color: #fff; font-size: 36px; margin-bottom: 10px; }
+        .sobre-grade { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: center; }
+        .sobre-fotos { display: grid; grid-template-columns: 3fr 2fr; gap: 10px; max-width: 520px; width: 100%; margin: 0 auto; }
+        .sobre-fotos figure { position: relative; margin: 0; overflow: hidden; border-radius: 18px; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35); background: #0f1f4d; }
+        .sobre-fotos img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+        .sobre-fotos .f1 { grid-row: 1 / span 2; }
+        .sobre-fotos .f2, .sobre-fotos .f3 { aspect-ratio: 1; }
+        .sobre-fotos .f3 img { object-position: 50% 30%; }
+        .sobre-novo .sobre-lead { font-size: 22px; font-weight: 600; color: #93b4f7; margin-bottom: 14px; line-height: 1.3; }
+        .sobre-novo p { max-width: 560px; color: #dbe5ff; font-size: 17px; margin-bottom: 14px; }
+        .formacao { margin-top: 22px; padding: 18px 20px; max-width: 560px; border-radius: 16px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); border-left: 4px solid #3b82f6; }
+        .formacao .rot { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #93b4f7; }
+        .formacao strong { display: block; font-size: 22px; color: #fff; margin: 4px 0 6px; }
+        .formacao span { display: block; color: #dbe5ff; font-size: 15px; line-height: 1.45; }
+        .formacao .rot { display: block; }
+        @media (min-width: 820px) { .sobre-grade { grid-template-columns: 5fr 6fr; gap: 56px; } }
     </style>
 </head>
 <body>
@@ -791,11 +809,26 @@
                 </div>
             </section>
 
-            <section class="faixa sobre">
-                <h2>Sobre mim</h2>
-                <p>Sou desenvolvedor autodidata, natural de Moçâmedes, Angola. Comecei a programar por curiosidade e pela vontade de resolver problemas reais — foi essa mesma curiosidade que me levou a aprender sozinho, sem curso formal em programação, testando, errando e construindo até perceber como as coisas funcionam por baixo.</p>
-                <p>Trabalho de forma multiplataforma, com experiência em desenvolvimento mobile e web — Kotlin, Android, Python, JavaScript e HTML/CSS. Gosto de construir sistemas completos do zero: desde gestão financeira a plataformas de negócios e ferramentas de automação, sempre à procura de soluções simples e independentes, sem depender de serviços de terceiros quando não é necessário.</p>
-                <p>Acredito que a curiosidade e a persistência valem mais do que o caminho tradicional — e é isso que tento levar para cada projeto que construo.</p>
+            <section class="faixa sobre-novo" id="sobre">
+                <div class="sobre-grade">
+                    <div class="sobre-fotos">
+                        <figure class="f1"><img src="img/sobre-1.jpg" alt="Adilson C. Rafael" loading="lazy"></figure>
+                        <figure class="f2"><img src="img/sobre-2.jpg" alt="Adilson no dia da formatura, em frente à FCSH" loading="lazy"></figure>
+                        <figure class="f3"><img src="img/Ady.jpg" alt="Retrato de Adilson" loading="lazy"></figure>
+                    </div>
+                    <div class="sobre-texto">
+                        <h2>Sobre mim</h2>
+                        <p class="sobre-lead">Licenciado em Física. Programador autodidata.</p>
+                        <p>Sou do Namibe, Angola. Comecei a programar por curiosidade e pela vontade de resolver problemas reais, e aprendi sozinho, testando, errando e construindo.</p>
+                        <p>Faço apps Android e sistemas completos do zero, em Kotlin, Python, JavaScript e HTML/CSS: gestão financeira, plataformas de negócios e automação. Prefiro soluções simples e independentes.</p>
+                        <div class="formacao">
+                            <span class="rot">Formação</span>
+                            <strong>Licenciado em Física</strong>
+                            <span>Faculdade de Ciências Sociais e Humanidades (FCSH), Universidade do Namibe (UNINBE)</span>
+                            <span>2021/22 a 2025/26</span>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <section class="faixa redes">
