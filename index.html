@@ -730,21 +730,26 @@
     
         .sobre-novo { background: linear-gradient(160deg, #1e3a8a 0%, #17306f 55%, #0f1f4d 100%); color: #e8eefc; }
         .sobre-novo h2 { color: #fff; font-size: 36px; margin-bottom: 10px; }
-        .sobre-grade { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: center; }
-        .sobre-fotos { display: grid; grid-template-columns: 3fr 2fr; gap: 10px; max-width: 520px; width: 100%; margin: 0 auto; }
-        .sobre-fotos figure { position: relative; margin: 0; overflow: hidden; border-radius: 18px; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35); background: #0f1f4d; }
-        .sobre-fotos img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-        .sobre-fotos .f1 { grid-row: 1 / span 2; }
-        .sobre-fotos .f2, .sobre-fotos .f3 { aspect-ratio: 1; }
-        .sobre-fotos .f3 img { object-position: 50% 30%; }
+        .sobre-grade, .formacao-grade { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: center; }
+        .foto-leg { margin: 0 auto; max-width: 380px; width: 100%; }
+        .foto-leg .moldura { position: relative; aspect-ratio: 3 / 4; border-radius: 20px; overflow: hidden; background: #0f1f4d; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35); }
+        .foto-leg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+        .foto-leg figcaption { margin-top: 12px; font-size: 15px; line-height: 1.4; text-align: center; color: #dbe5ff; }
         .sobre-novo .sobre-lead { font-size: 22px; font-weight: 600; color: #93b4f7; margin-bottom: 14px; line-height: 1.3; }
         .sobre-novo p { max-width: 560px; color: #dbe5ff; font-size: 17px; margin-bottom: 14px; }
-        .formacao { margin-top: 22px; padding: 18px 20px; max-width: 560px; border-radius: 16px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); border-left: 4px solid #3b82f6; }
-        .formacao .rot { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #93b4f7; }
-        .formacao strong { display: block; font-size: 22px; color: #fff; margin: 4px 0 6px; }
-        .formacao span { display: block; color: #dbe5ff; font-size: 15px; line-height: 1.45; }
-        .formacao .rot { display: block; }
-        @media (min-width: 820px) { .sobre-grade { grid-template-columns: 5fr 6fr; gap: 56px; } }
+        .formacao-sec { background: var(--surface); }
+        .formacao-sec .foto-leg .moldura { border: 4px solid #3b82f6; box-shadow: 0 14px 34px rgba(30, 58, 138, 0.28); }
+        .formacao-sec .foto-leg figcaption { color: var(--text-light); }
+        .formacao-card { padding: 24px 26px; max-width: 560px; border-radius: 18px; background: #fff; border-left: 5px solid #3b82f6; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07); }
+        .formacao-card .rot { display: block; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--secondary); }
+        .formacao-card strong { display: block; font-size: 28px; color: var(--primary); margin: 6px 0 10px; }
+        .formacao-card .l { display: block; color: var(--text); font-size: 17px; line-height: 1.45; }
+        .formacao-card .anos { color: var(--text-light); font-size: 15px; margin-top: 6px; }
+        @media (min-width: 820px) {
+            .sobre-grade { grid-template-columns: 5fr 6fr; gap: 56px; }
+            .formacao-grade { grid-template-columns: 6fr 5fr; gap: 56px; }
+            .formacao-grade .foto-leg { order: 2; }
+        }
     </style>
 </head>
 <body>
@@ -811,21 +816,33 @@
 
             <section class="faixa sobre-novo" id="sobre">
                 <div class="sobre-grade">
-                    <div class="sobre-fotos">
-                        <figure class="f1"><img src="img/sobre-1.jpg" alt="Adilson C. Rafael" loading="lazy"></figure>
-                        <figure class="f2"><img src="img/sobre-2.jpg" alt="Adilson no dia da formatura, em frente à FCSH" loading="lazy"></figure>
-                        <figure class="f3"><img src="img/Ady.jpg" alt="Retrato de Adilson" loading="lazy"></figure>
-                    </div>
+                    <figure class="foto-leg">
+                        <div class="moldura"><img src="img/sobre-1.jpg" alt="Adilson C. Rafael" loading="lazy"></div>
+                        <figcaption>Adilson C. Rafael, desenvolvedor Android e Web.</figcaption>
+                    </figure>
                     <div class="sobre-texto">
                         <h2>Sobre mim</h2>
                         <p class="sobre-lead">Licenciado em Física. Programador autodidata.</p>
                         <p>Sou do Namibe, Angola. Comecei a programar por curiosidade e pela vontade de resolver problemas reais, e aprendi sozinho, testando, errando e construindo.</p>
                         <p>Faço apps Android e sistemas completos do zero, em Kotlin, Python, JavaScript e HTML/CSS: gestão financeira, plataformas de negócios e automação. Prefiro soluções simples e independentes.</p>
-                        <div class="formacao">
-                            <span class="rot">Formação</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="faixa formacao-sec" id="formacao">
+                <div class="formacao-grade">
+                    <figure class="foto-leg">
+                        <div class="moldura"><img src="img/sobre-2.jpg" alt="Adilson de beca, no dia da formatura, em frente à FCSH" loading="lazy"></div>
+                        <figcaption>Dia da formatura, em frente à Faculdade de Ciências Sociais e Humanidades.</figcaption>
+                    </figure>
+                    <div>
+                        <h2>Formação</h2>
+                        <div class="formacao-card">
+                            <span class="rot">Formação académica</span>
                             <strong>Licenciado em Física</strong>
-                            <span>Faculdade de Ciências Sociais e Humanidades (FCSH), Universidade do Namibe (UNINBE)</span>
-                            <span>2021/22 a 2025/26</span>
+                            <span class="l">Faculdade de Ciências Sociais e Humanidades (FCSH)</span>
+                            <span class="l">Universidade do Namibe (UNINBE)</span>
+                            <span class="l anos">2021/22 a 2025/26</span>
                         </div>
                     </div>
                 </div>
