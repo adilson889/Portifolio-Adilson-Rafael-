@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Portfólio Adilson C. Rafael</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #1e3a8a;
@@ -499,6 +501,14 @@
         .redes .social a { background: var(--bg); box-shadow: none; }
 
         .marcas { background: var(--surface); text-align: center; }
+        .org-destaque { margin: 10px auto 28px; padding: 28px 16px 24px; max-width: 520px; background: #fff; border-radius: 24px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08); text-align: center; }
+        .org-destaque .por { display: block; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-light); }
+        .org-destaque a { text-decoration: none; display: inline-block; }
+        .org-destaque .org-nome { font-family: Sora, "Segoe UI", system-ui, sans-serif; font-size: clamp(24px, 8vw, 40px); line-height: 1.2; margin-top: 10px; letter-spacing: -1px; color: var(--primary); }
+        .org-destaque .org-nome .g { font-weight: 300; }
+        .org-destaque .org-nome .n { font-weight: 800; }
+        .org-destaque .org-nome .l { font-weight: 800; color: #2070CB; }
+        .org-destaque .traco { width: 48px; height: 4px; border-radius: 2px; background: #2070CB; margin: 16px auto 0; }
         .marcas-grade { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px 12px; max-width: 760px; margin: 14px auto 0; }
         .marcas-grade figure { margin: 0; flex: 0 0 calc(25% - 9px); max-width: 84px; }
         .marcas-grade img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 20px; background: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); }
@@ -844,6 +854,13 @@
 
             <section class="faixa marcas">
                 <h2>Projetos e parcerias</h2>
+                <div class="org-destaque">
+                    <span class="por">A minha organização</span>
+                    <a href="https://github.com/getnativelayout" target="_blank" rel="noopener" aria-label="getnativeLayout no GitHub">
+                        <div class="org-nome"><span class="g">get</span><span class="n">native</span><span class="l">Layout</span></div>
+                    </a>
+                    <div class="traco"></div>
+                </div>
                 <div class="marcas-grade">
                     <figure><img src="img/m-saldoexpress.jpg" alt="SaldoExpress" loading="lazy"><figcaption>SaldoExpress</figcaption></figure>
                     <figure><img src="img/m-sire.jpg" alt="SIRE" loading="lazy"><figcaption>SIRE</figcaption></figure>
