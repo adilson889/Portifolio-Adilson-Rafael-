@@ -514,6 +514,34 @@
         .marcas-grade img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 20px; background: #fff; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); }
         .marcas-grade figcaption { margin-top: 7px; font-size: 12px; line-height: 1.25; color: var(--primary); }
 
+        #contacto { margin: -50px calc(50% - 50vw) 0; }
+
+        #contacto .contacto-box {
+            background: transparent;
+            box-shadow: none;
+            border-radius: 0;
+            max-width: 560px;
+            padding: 56px 22px 40px;
+        }
+
+        .footer-text { margin-top: 0; padding: 26px 0; background: var(--surface); }
+
+        /* --- TOPO COM HAMBURGUER --- */
+        :root { --topo-h: 62px; }
+
+        .topo {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: var(--topo-h);
+            background: var(--surface);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 12px 0 22px;
+        }
+
         .topo .topo-social { margin: 0; gap: 8px; justify-content: flex-start; }
         .topo .topo-social a { width: 36px; height: 36px; background: var(--bg); box-shadow: none; }
         .topo .topo-social svg { width: 18px; height: 18px; }
