@@ -737,6 +737,10 @@
         .hero-novo .hero-botoes { justify-content: flex-start; margin-top: 20px; }
         .hero-novo .hero-botoes a { font-family: inherit; font-size: 17px; font-weight: 600; padding: 12px 28px; border-radius: 999px; border: 2px solid #3b82f6; background: #3b82f6; color: #fff; text-decoration: none; transition: all 0.25s; }
         .hero-novo .hero-botoes a:hover { background: #fff; color: #1e3a8a; border-color: #fff; }
+        .contador-p { margin-top: 26px; display: flex; align-items: baseline; gap: 12px; }
+        .contador-p[hidden] { display: none; }
+        .contador-p .num { font-family: Sora, "Segoe UI", system-ui, sans-serif; font-weight: 800; font-size: clamp(44px, 14vw, 64px); line-height: 1; letter-spacing: -2px; color: #fff; }
+        .contador-p .leg { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: #93b4f7; }
         .carrossel { margin: 28px calc(50% - 50vw) 0; }
         .carrossel .pista { position: relative; display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: max(22px, calc(50vw - 480px)); padding: 4px max(22px, calc(50vw - 480px)) 6px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
         .carrossel .pista::-webkit-scrollbar { display: none; }
@@ -818,6 +822,10 @@
                     <div class="hero-botoes">
                         <a href="https://github.com/getnativelayout/SaldoExpress/releases/download/v1.0.0/SaldoExpress.apk" download>Baixar</a>
                         <button type="button" class="sec" onclick="irPara(1)">Ver projeto</button>
+                    </div>
+                    <div class="contador-p" id="contador" hidden>
+                        <span class="num" id="num" aria-live="polite">0</span>
+                        <span class="leg" id="leg">downloads</span>
                     </div>
                 </div>
 
@@ -1395,6 +1403,74 @@ function irPara(i) {
         pista.addEventListener(ev, function () { setTimeout(iniciar, 6000); }, { passive: true });
     });
     iniciar();
+})();
+</script>
+
+<script>
+(function () {
+    var REPO = 'getnativelayout/SaldoExpress';
+    var CHAVE = 'sx_downloads';
+    var VALIDADE = 10 * 60 * 1000;
+    var box = document.getElementById('contador');
+    var num = document.getElementById('num');
+    var leg = document.getElementById('leg');
+    if (!box || !num) return;
+
+    function formatar(n) {
+        try { return n.toLocaleString('pt-PT'); } catch (e) { return String(n); }
+    }
+
+    function mostrar(alvo) {
+        box.hidden = false;
+        leg.textContent = alvo === 1 ? 'download' : 'downloads';
+        var reduzido = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduzido || alvo < 2) { num.textContent = formatar(alvo); return; }
+        var inicio = null, dur = 900;
+        function passo(t) {
+            if (inicio === null) inicio = t;
+            var p = Math.min(1, (t - inicio) / dur);
+            var f = 1 - Math.pow(1 - p, 3);
+            num.textContent = formatar(Math.round(alvo * f));
+            if (p < 1) requestAnimationFrame(passo);
+        }
+        requestAnimationFrame(passo);
+    }
+
+    function lerCache(ignorarValidade) {
+        try {
+            var c = JSON.parse(localStorage.getItem(CHAVE));
+            if (c && typeof c.n === 'number' && (ignorarValidade || Date.now() - c.t < VALIDADE)) return c.n;
+        } catch (e) {}
+        return null;
+    }
+
+    function somar(lista) {
+        var total = 0;
+        lista.forEach(function (r) {
+            if (r.draft) return;
+            (r.assets || []).forEach(function (a) {
+                if (/\.apk$/i.test(a.name)) total += a.download_count || 0;
+            });
+        });
+        return total;
+    }
+
+    var emCache = lerCache(false);
+    if (emCache !== null) { mostrar(emCache); return; }
+
+    fetch('https://api.github.com/repos/' + REPO + '/releases?per_page=100', {
+        headers: { 'Accept': 'application/vnd.github+json' }
+    }).then(function (r) {
+        if (!r.ok) throw new Error('http ' + r.status);
+        return r.json();
+    }).then(function (lista) {
+        var n = somar(lista);
+        try { localStorage.setItem(CHAVE, JSON.stringify({ n: n, t: Date.now() })); } catch (e) {}
+        mostrar(n);
+    }).catch(function () {
+        var antigo = lerCache(true);
+        if (antigo !== null) mostrar(antigo);
+    });
 })();
 </script>
 </body>
