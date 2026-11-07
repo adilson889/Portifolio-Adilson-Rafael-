@@ -1473,5 +1473,59 @@ function irPara(i) {
     });
 })();
 </script>
+
+<script>
+(function () {
+    var API = 'https://sire-kixikila-api.vercel.app';
+
+    function origem() {
+        try {
+            var q = new URLSearchParams(location.search);
+            var r = q.get('ref') || q.get('utm_source');
+            if (r) return r;
+            if (document.referrer) {
+                var h = new URL(document.referrer).hostname;
+                if (h && h !== location.hostname) return h;
+            }
+        } catch (e) {}
+        return '';
+    }
+
+    function enviar(tipo) {
+        try {
+            var url = API + '/api/loja/visita?t=' + tipo + '&o=' + encodeURIComponent(origem());
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon(url);
+            } else {
+                fetch(url, { method: 'POST', keepalive: true, mode: 'cors' });
+            }
+        } catch (e) {}
+    }
+
+    try {
+        var chave = 'visita_ts';
+        var agora = Date.now();
+        var ultima = parseInt(localStorage.getItem(chave) || '0', 10);
+        if (!ultima || agora - ultima > 12 * 60 * 60 * 1000) {
+            localStorage.setItem(chave, String(agora));
+            enviar('visita');
+        }
+    } catch (e) {
+        enviar('visita');
+    }
+
+    document.addEventListener('click', function (ev) {
+        var alvo = ev.target;
+        if (!alvo || !alvo.closest) return;
+        var a = alvo.closest('a');
+        if (a) {
+            var href = a.getAttribute('href') || '';
+            if (/SaldoExpress\.apk/i.test(href)) { enviar('baixar'); return; }
+            if (/wa\.me|whatsapp/i.test(href)) { enviar('contacto'); return; }
+        }
+        if (alvo.closest('.pc-btn')) enviar('contacto');
+    }, true);
+})();
+</script>
 </body>
 </html>
