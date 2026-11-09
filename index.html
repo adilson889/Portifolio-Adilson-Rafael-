@@ -741,6 +741,12 @@
         .contador-p[hidden] { display: none; }
         .contador-p .num { font-family: Sora, "Segoe UI", system-ui, sans-serif; font-weight: 800; font-size: clamp(44px, 14vw, 64px); line-height: 1; letter-spacing: -2px; color: #fff; }
         .contador-p .leg { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: #93b4f7; }
+        .aviso-instalar { margin-top: 18px; max-width: 520px; padding: 14px 16px; border-radius: 16px; background: #fff7e0; color: #3b2f00; border-left: 5px solid #f5b301; font-size: 15px; line-height: 1.5; }
+        .aviso-instalar summary { cursor: pointer; font-weight: 700; font-size: 16px; }
+        .aviso-instalar p { margin: 10px 0 0; max-width: none; color: #3b2f00; font-size: 15px; }
+        .aviso-instalar ol { margin: 10px 0 0; padding-left: 22px; }
+        .aviso-instalar li { margin-bottom: 4px; }
+        .aviso-instalar .aviso-nota { font-size: 14px; }
         .carrossel { margin: 28px calc(50% - 50vw) 0; }
         .carrossel .pista { position: relative; display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: max(22px, calc(50vw - 480px)); padding: 4px max(22px, calc(50vw - 480px)) 6px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
         .carrossel .pista::-webkit-scrollbar { display: none; }
@@ -819,6 +825,17 @@
                     <p class="pc-sup">Em destaque</p>
                     <h1>SaldoExpress</h1>
                     <p class="pc-desc">App Android para vendedores de saldo. Menos cliques, mais vendas.</p>
+                    <details class="aviso-instalar" open>
+                        <summary>Aviso antes de instalar</summary>
+                        <p>O Android pode mostrar <strong>“App bloqueada para proteger o dispositivo”</strong>. É normal: o app ainda não está na Play Store. O SaldoExpress guarda o teu ID e a tua senha só no teu telemóvel.</p>
+                        <ol>
+                            <li>Abre a <strong>Play Store</strong>, toca na tua foto, depois em <strong>Play Protect</strong> e na engrenagem.</li>
+                            <li>Desliga <strong>“Analisar apps com o Play Protect”</strong>.</li>
+                            <li>Toca em <strong>Baixar</strong> e instala o app.</li>
+                            <li>Volta a ligar o Play Protect.</li>
+                        </ol>
+                        <p class="aviso-nota">Se a acessibilidade aparecer bloqueada: Definições &gt; Apps &gt; SaldoExpress &gt; menu dos três pontos &gt; <strong>Permitir definições restritas</strong>.</p>
+                    </details>
                     <div class="hero-botoes">
                         <a href="https://github.com/getnativelayout/SaldoExpress/releases/download/v1.0.0/SaldoExpress.apk" download>Baixar</a>
                         <button type="button" class="sec" onclick="irPara(1)">Ver projeto</button>
