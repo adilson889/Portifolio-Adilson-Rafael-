@@ -741,7 +741,7 @@
         .contador-p[hidden] { display: none; }
         .contador-p .num { font-family: Sora, "Segoe UI", system-ui, sans-serif; font-weight: 800; font-size: clamp(44px, 14vw, 64px); line-height: 1; letter-spacing: -2px; color: #fff; }
         .contador-p .leg { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; color: #93b4f7; }
-        .aviso-instalar { margin-top: 18px; max-width: 520px; padding: 14px 16px; border-radius: 16px; background: #fff7e0; color: #3b2f00; border-left: 5px solid #f5b301; font-size: 15px; line-height: 1.5; }
+        .aviso-instalar { margin-top: 18px; max-width: 520px; padding: 14px 16px; border-radius: 16px; background: #fff7e0; color: #3b2f00; font-size: 15px; line-height: 1.5; }
         .aviso-instalar summary { cursor: pointer; font-weight: 700; font-size: 16px; }
         .aviso-instalar p { margin: 10px 0 0; max-width: none; color: #3b2f00; font-size: 15px; }
         .aviso-instalar ol { margin: 10px 0 0; padding-left: 22px; }
@@ -750,9 +750,9 @@
         .carrossel { margin: 28px calc(50% - 50vw) 0; }
         .carrossel .pista { position: relative; display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: max(22px, calc(50vw - 480px)); padding: 4px max(22px, calc(50vw - 480px)) 6px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
         .carrossel .pista::-webkit-scrollbar { display: none; }
-        .carrossel .slide { flex: 0 0 min(230px, 62vw); scroll-snap-align: start; margin: 0; }
-        .hero-novo .slide img { display: block; width: 100%; height: auto; margin: 0; border-radius: 20px; border: 1px solid #ffffff33; background: #0f1f4d; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35); }
-        .carrossel figcaption { margin-top: 10px; font-size: 14px; color: #dbe5ff; text-align: center; }
+        .carrossel .slide { flex: 0 0 min(150px, 42vw); scroll-snap-align: start; margin: 0; }
+        .hero-novo .slide img { display: block; width: 100%; height: auto; margin: 0; border-radius: 16px; border: 1px solid #ffffff33; background: #0f1f4d; box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3); }
+        .carrossel figcaption { margin-top: 8px; font-size: 13px; color: #dbe5ff; text-align: center; }
         .pontos { display: flex; justify-content: center; gap: 7px; margin-top: 16px; }
         .pontos button { width: 8px; height: 8px; padding: 0; border-radius: 4px; border: 0; background: #ffffff55; cursor: pointer; transition: all 0.25s; }
         .pontos button.ativo { width: 22px; background: #3b82f6; }
@@ -829,10 +829,10 @@
                         <summary>Aviso antes de instalar</summary>
                         <p>O Android pode mostrar <strong>“App bloqueada para proteger o dispositivo”</strong>. É normal: o app ainda não está na Play Store. O SaldoExpress guarda o teu ID e a tua senha só no teu telemóvel.</p>
                         <ol>
-                            <li>Abre a <strong>Play Store</strong>, toca na tua foto, depois em <strong>Play Protect</strong> e na engrenagem.</li>
-                            <li>Desliga <strong>“Analisar apps com o Play Protect”</strong>.</li>
-                            <li>Toca em <strong>Baixar</strong> e instala o app.</li>
-                            <li>Volta a ligar o Play Protect.</li>
+                            <li>Toca em <strong>Baixar</strong> e abre o ficheiro.</li>
+                            <li>Se aparecer <strong>“Instalar mesmo assim”</strong>, toca nessa opção e acabou.</li>
+                            <li>Se só houver o botão OK: Play Store &gt; a tua foto &gt; <strong>Play Protect</strong> &gt; engrenagem &gt; desliga <strong>“Analisar apps com o Play Protect”</strong>.</li>
+                            <li>Instala o app e volta a ligar o Play Protect.</li>
                         </ol>
                         <p class="aviso-nota">Se a acessibilidade aparecer bloqueada: Definições &gt; Apps &gt; SaldoExpress &gt; menu dos três pontos &gt; <strong>Permitir definições restritas</strong>.</p>
                     </details>
@@ -945,7 +945,7 @@
                     <img src="img/SaldoExpress.jpg" alt="SaldoExpress">
                     <div class="info">
                         <h3>SaldoExpress</h3>
-                        <p>App Android para vendedores de saldo. Automatiza os menus USSD da operadora (Voucher, Variável, Voz e Dados), regista as vendas e gera relatórios em PDF. A licença é activada com o comprovativo de pagamento, validado automaticamente no servidor.</p>
+                        <p>App Android para vendedores de saldo. Automatiza os menus USSD da operadora (Voucher, Variável, Voz e Dados), regista as vendas e gera relatórios em PDF. O uso é gratuito para agentes com ID verificado.</p>
                         <div class="links">
                             <a href="https://github.com/getnativelayout/SaldoExpress">
                                 <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.15 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.62.24 2.85.12 3.15.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
