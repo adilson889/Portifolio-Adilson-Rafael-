@@ -7,155 +7,344 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
-:root{--bg:#fff;--surface:#F7F7F7;--line:#E6E6E6;--fg:#121212;--muted:#666;--font:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--nav-h:76px;color-scheme:light}
+:root{--bg:#fff;--surface:#F7F7F7;--line:#E6E6E6;--fg:#121212;--muted:#666;--primary:#121212;--secondary:#121212;--text-light:#666;--font:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color-scheme:light}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{background:var(--bg)}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;font-family:var(--font);font-size:17px;line-height:1.45;color:var(--fg);padding-top:max(16px,env(safe-area-inset-top,0px));padding-bottom:calc(var(--nav-h) + 28px);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body{margin:0;font-family:var(--font);font-size:17px;line-height:1.45;color:var(--fg);padding-top:max(16px,env(safe-area-inset-top,0px));padding-bottom:max(40px,env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 [hidden]{display:none!important}
-.wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
 button,input,textarea{font:inherit;color:inherit}
 a{color:inherit}
-a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
 svg.i{width:24px;height:24px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 svg.i.sm{width:20px;height:20px}
 svg.brand{fill:currentColor;stroke:none}
+.top{position:relative}
 .appbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brandname{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;letter-spacing:-.01em}
+.brandname{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;letter-spacing:-.01em;min-width:0}
 .avatar-img{width:36px;height:36px;border-radius:50%;object-fit:cover;border:1px solid var(--line);flex:none}
-.who{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px 6px 10px;font-size:15px;font-weight:500}
+.burger{width:48px;height:48px;border-radius:14px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer;flex:none}
+.burger:hover{border-color:var(--fg)}
+.menu{position:absolute;right:0;top:calc(100% + 8px);width:min(270px,100%);z-index:30;padding:6px;display:flex;flex-direction:column;gap:2px;background:var(--bg);border:1px solid var(--line);border-radius:16px;box-shadow:0 10px 28px rgba(0,0,0,.08)}
+.menu button{min-height:50px;padding:0 14px;border:1px solid transparent;background:transparent;border-radius:12px;font-size:17px;text-align:left;cursor:pointer;display:flex;align-items:center;gap:12px;color:var(--fg)}
+.menu button:hover{background:var(--surface)}
+.menu button[aria-current="page"]{background:var(--surface);border-color:var(--line);font-weight:700}
 h1{margin:4px 0 0;font-size:30px;line-height:1.15;letter-spacing:-.02em;font-weight:700}
 h2{margin:0 0 10px;font-size:14px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
+h3{margin:0;font-size:19px;font-weight:700}
 .sub{margin:6px 0 0;color:var(--muted);font-size:16px}
-.tab{display:flex;flex-direction:column;gap:22px}
+.tab{display:flex;flex-direction:column;gap:24px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:16px}
 .note{padding:16px;color:var(--muted);font-size:16px;display:flex;gap:12px;align-items:flex-start}
 .note svg{margin-top:2px}
-.btn{background:var(--bg);border:1px solid var(--line);border-radius:12px;min-height:50px;padding:12px 16px;cursor:pointer;font-size:17px;font-weight:500;display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;text-decoration:none;color:var(--fg)}
+.btn{background:var(--bg);border:1px solid var(--line);border-radius:12px;min-height:50px;padding:12px 16px;cursor:pointer;font-size:17px;font-weight:500;display:inline-flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;color:var(--fg)}
 .btn:hover{border-color:var(--fg)}
 .btn.dark{background:var(--fg);color:var(--bg);border-color:var(--fg)}
-.btn:disabled{color:var(--muted);cursor:default}
-.feat{padding:16px;display:flex;flex-direction:column;gap:14px}
-.head{display:flex;gap:14px;align-items:center}
+.btn.full{width:100%}
+.btn.sm{min-height:44px;padding:8px 14px;font-size:16px}
+.perfil{display:flex;align-items:center;gap:16px;padding:16px}
+.perfil img{width:72px;height:72px;border-radius:50%;object-fit:cover;border:1px solid var(--line);flex:none}
+.feat{display:flex;flex-direction:column}
+.feat-top{padding:16px;display:flex;gap:14px;align-items:center}
 .logo{width:52px;height:52px;border-radius:14px;object-fit:cover;border:1px solid var(--line);flex:none}
 .main{display:flex;flex-direction:column;min-width:0;flex:1}
 .t{font-weight:700;font-size:19px}
 .s{color:var(--muted);font-size:15px}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}
-.tile{margin:0}
-.tile img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:14px;border:1px solid var(--line);background:var(--surface)}
-.tile figcaption{margin-top:6px;font-size:12px;color:var(--muted);text-align:center;line-height:1.2;overflow-wrap:anywhere}
+.t17{font-size:17px}
+details.aviso{border-top:1px solid var(--line)}
+details.aviso summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;font-weight:600}
+details.aviso summary::-webkit-details-marker{display:none}
+details.aviso summary::after{content:"";width:9px;height:9px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);transition:transform .2s;margin-right:4px}
+details.aviso[open] summary::after{transform:rotate(-135deg)}
 .row{padding:16px;display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}
-.row+.row{border-top:1px solid var(--line)}
+.row+.row,.note+.row{border-top:1px solid var(--line)}
+.steps .row{align-items:flex-start}
 .av{width:44px;height:44px;border-radius:50%;background:var(--bg);border:1px solid var(--line);display:grid;place-items:center;flex:none;font-weight:700}
 .go{color:var(--muted)}
-.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.stat{padding:18px 16px;display:flex;flex-direction:column;gap:12px;text-decoration:none;color:inherit}
-.stat .l{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:16px}
-.stat strong{font-size:44px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
-.stat strong.txt{font-size:28px;line-height:44px}
-.shots{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none;margin-right:-16px;padding-right:16px}
+.acoes{padding:16px;display:flex;gap:10px;border-top:1px solid var(--line)}
+.acoes .btn{flex:1}
+.count{padding:0 16px 16px;display:flex;align-items:baseline;gap:8px;color:var(--muted)}
+.count strong{font-size:34px;line-height:1;color:var(--fg);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.shots{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
 .shots::-webkit-scrollbar{display:none}
 .shot{margin:0;flex:0 0 112px}
 .shot img{display:block;width:100%;height:auto;aspect-ratio:540/1090;object-fit:cover;border-radius:14px;border:1px solid var(--line);background:var(--surface)}
-.shot figcaption{margin-top:6px;font-size:12px;color:var(--muted);text-align:center;line-height:1.2}
-.steps .row{align-items:flex-start}
+figcaption{font-size:12px;color:var(--muted);line-height:1.25}
+.shot figcaption{margin-top:6px;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
+.tile{margin:0}
+.tile img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:14px;border:1px solid var(--line);background:var(--surface)}
+.tile figcaption{margin-top:6px;text-align:center;overflow-wrap:anywhere}
+.proj{overflow:hidden}
+.proj>img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top;border-bottom:1px solid var(--line);background:var(--bg)}
+.proj-b{padding:16px;display:flex;flex-direction:column;gap:12px}
+.proj-b p{margin:0;color:var(--muted);font-size:16px}
+.links{display:flex;flex-wrap:wrap;gap:10px}
+.fig{margin:0}
+.fig img{display:block;width:100%;max-width:340px;height:auto;border-radius:16px;border:1px solid var(--line)}
+.fig figcaption{margin-top:8px;font-size:14px}
+.lead{font-size:21px;font-weight:700;line-height:1.3;margin:0}
+.txt p{margin:0 0 12px;color:var(--muted);font-size:17px}
+.fazer{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.fazer div{padding:16px}
+.fazer h3{font-size:17px;margin-bottom:4px}
+.fazer p{margin:0;color:var(--muted);font-size:15px}
+.formacao{padding:16px;display:flex;flex-direction:column;gap:4px}
+.formacao .rot{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
+.formacao strong{font-size:20px}
+.formacao .l{color:var(--muted);font-size:16px}
 .form{padding:16px;display:flex;flex-direction:column;gap:10px}
 .form label{font-size:16px;color:var(--muted)}
 .field{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px 16px;width:100%;font-size:17px;min-height:50px}
 textarea.field{min-height:120px;resize:vertical}
 .foot{color:var(--muted);font-size:14px;text-align:center;margin:8px 0 0}
-nav.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bg);border-top:1px solid var(--line);padding:8px max(8px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
-.bar-in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.nav{border:0;background:transparent;border-radius:14px;min-height:60px;padding:8px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:14px;color:var(--muted)}
-.nav svg{width:26px;height:26px}
-.nav[aria-current="page"]{background:var(--surface);color:var(--fg);font-weight:700}
+        .md-painel {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: var(--bg);
+            display: none;
+            flex-direction: column;
+        }
+
+        .md-painel.aberto { display: flex; animation: fadeIn 0.25s ease; }
+
+        .md-topo {
+            height: 58px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0 8px;
+            background: var(--surface);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .md-topo button {
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: none;
+            font-size: 24px;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        .md-topo button { display: flex; align-items: center; justify-content: center; }
+
+        .md-titulo {
+            flex: 1;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .md-corpo {
+            flex: 1;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+            padding: 26px max(18px, calc(50vw - 380px)) 70px;
+            font-size: 17px;
+            word-wrap: break-word;
+        }
+
+        .md-corpo h1, .md-corpo h2, .md-corpo h3, .md-corpo h4, .md-corpo h5, .md-corpo h6 {
+            color: var(--primary);
+            margin: 26px 0 10px;
+            line-height: 1.3;
+        }
+
+        .md-corpo h1 { font-size: 30px; padding-bottom: 8px; border-bottom: 1px solid var(--line); margin-top: 0; }
+        .md-corpo h2 { font-size: 24px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+        .md-corpo h3 { font-size: 20px; }
+        .md-corpo p { margin-bottom: 14px; }
+        .md-corpo a { color: var(--secondary); text-decoration: underline; }
+        .md-corpo img { max-width: 100%; height: auto; border-radius: 8px; }
+        .md-corpo hr { border: none; border-top: 1px solid var(--line); margin: 22px 0; }
+        .md-corpo del { opacity: 0.7; }
+
+        .md-corpo blockquote {
+            border-left: 4px solid var(--secondary);
+            padding: 2px 0 2px 14px;
+            margin: 0 0 14px;
+            color: var(--text-light);
+        }
+
+        .md-corpo code {
+            font-family: ui-monospace, Menlo, Consolas, monospace;
+            font-size: 0.88em;
+            background: #e6e0d2;
+            padding: 1px 6px;
+            border-radius: 5px;
+        }
+
+        .md-corpo pre {
+            background: #0d1117;
+            color: #c9d1d9;
+            padding: 14px 16px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin-bottom: 16px;
+        }
+
+        .md-corpo pre code { background: none; padding: 0; color: inherit; font-size: 14px; }
+
+        .md-corpo .md-l { margin: 0 0 14px 22px; }
+        .md-corpo .md-l li { margin-bottom: 4px; }
+        .md-corpo .md-pasta { list-style: none; margin-left: 0; }
+        .md-corpo .md-pasta li { padding: 10px 0; border-bottom: 1px solid var(--line); }
+
+        .md-corpo .md-tab { overflow-x: auto; margin-bottom: 16px; }
+        .md-corpo table { border-collapse: collapse; min-width: 100%; }
+        .md-corpo th, .md-corpo td { border: 1px solid var(--line); padding: 7px 12px; text-align: left; }
+        .md-corpo th { background: var(--surface); }
+
+        .md-info { color: var(--text-light); }
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media (max-width:380px){.fazer{grid-template-columns:1fr}.acoes{flex-direction:column}}
 </style>
 </head>
 <body>
 
 <div class="wrap">
-  <header class="appbar">
-    <div class="brandname"><img class="avatar-img" src="img/Ady.jpg" alt="Foto de perfil" width="36" height="36">Adilson C. Rafael</div>
-    <div class="who"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Namibe</div>
-  </header>
+  <div class="top">
+    <header class="appbar">
+      <div class="brandname"><img class="avatar-img" src="img/Ady.jpg" alt="" width="36" height="36">Adilson C. Rafael</div>
+      <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="menu"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    </header>
+    <nav class="menu" id="menu" aria-label="Navegação principal" hidden>
+      <button type="button" data-tab="inicio" aria-current="page">Início</button>
+      <button type="button" data-tab="projetos">Projetos</button>
+      <button type="button" data-tab="sobre">Sobre mim</button>
+      <button type="button" data-tab="contacto">Contacto</button>
+    </nav>
+  </div>
 
   <main>
+
   <section id="inicio" class="tab">
-    <div>
-      <h1>Adilson C. Rafael</h1>
-      <p class="sub">Desenvolvedor de Software · Licenciado em Física</p>
+    <div class="card perfil">
+      <img src="img/Ady.jpg" alt="Foto de perfil de Adilson C. Rafael" width="72" height="72">
+      <div class="main"><h1 style="margin:0;font-size:24px">Adilson C. Rafael</h1><span class="s" style="font-size:16px">Desenvolvedor de Software</span></div>
+      <button class="btn sm pc-btn" type="button" data-go="contacto">Contacto</button>
     </div>
-    <div class="card note">
-      <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 8l-4 4 4 4m8-8l4 4-4 4"/></svg>
-      <span>Faço apps Android e sistemas completos do zero, em Kotlin, Python, JavaScript e HTML/CSS.</span>
-    </div>
+
     <div>
       <h2>Em destaque</h2>
       <div class="card feat">
-        <div class="head">
+        <div class="feat-top">
           <img class="logo" src="img/m-saldoexpress.jpg" alt="SaldoExpress" width="52" height="52">
           <div class="main"><span class="t">SaldoExpress</span><span class="s">App Android para vendedores de saldo. Menos cliques, mais vendas.</span></div>
         </div>
-        <a class="btn dark" href="https://github.com/getnativelayout/SaldoExpress/releases/download/v1.0.0/SaldoExpress.apk" download><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>Baixar para Android</a>
-        <button class="btn" type="button" data-go="sx">Ver capturas e instalação</button>
+        <details class="aviso" open>
+          <summary>Aviso antes de instalar</summary>
+          <div class="steps">
+            <div class="note" style="padding-top:0">O Android pode mostrar “App bloqueada para proteger o dispositivo”. É normal: o app ainda não está na Play Store. O SaldoExpress guarda o teu ID e a tua senha só no teu telemóvel.</div>
+            <div class="row"><span class="av">1</span><div class="main"><span class="t t17">Baixar e abrir</span><span class="s">Toca em Baixar e abre o ficheiro.</span></div></div>
+            <div class="row"><span class="av">2</span><div class="main"><span class="t t17">Instalar mesmo assim</span><span class="s">Se a opção aparecer, toca nela e acabou.</span></div></div>
+            <div class="row"><span class="av">3</span><div class="main"><span class="t t17">Só há o botão OK?</span><span class="s">Play Store, a tua foto, Play Protect, engrenagem. Desliga “Analisar apps com o Play Protect”.</span></div></div>
+            <div class="row"><span class="av">4</span><div class="main"><span class="t t17">Volta a ligar</span><span class="s">Depois de instalar, liga outra vez o Play Protect.</span></div></div>
+            <div class="note" style="border-top:1px solid var(--line)">Se a acessibilidade aparecer bloqueada: Definições &gt; Apps &gt; SaldoExpress &gt; menu dos três pontos &gt; <strong>Permitir definições restritas</strong>.</div>
+          </div>
+        </details>
+        <div class="acoes">
+          <a class="btn dark" href="https://github.com/getnativelayout/SaldoExpress/releases/download/v1.0.0/SaldoExpress.apk" download><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>Baixar</a>
+          <button class="btn" type="button" data-go="projetos">Ver projeto</button>
+        </div>
+        <div class="count" id="contador" hidden><strong id="num" aria-live="polite">0</strong><span id="leg">downloads</span></div>
       </div>
     </div>
-    <div>
-      <h2>Projetos e parcerias</h2>
-      <div class="grid"><figure class="tile"><img src="img/m-saldoexpress.jpg" alt="SaldoExpress" loading="lazy" width="256" height="256"><figcaption>SaldoExpress</figcaption></figure><figure class="tile"><img src="img/m-sire.jpg" alt="SIRE" loading="lazy" width="256" height="256"><figcaption>SIRE</figcaption></figure><figure class="tile"><img src="img/m-p2p.jpg" alt="RondaP2P" loading="lazy" width="256" height="256"><figcaption>RondaP2P</figcaption></figure><figure class="tile"><img src="img/m-apk.jpg" alt="APK Builder" loading="lazy" width="256" height="256"><figcaption>APK Builder</figcaption></figure><figure class="tile"><img src="img/m-rf.jpg" alt="RF" loading="lazy" width="256" height="256"><figcaption>RF</figcaption></figure><figure class="tile"><img src="img/m-tcc.jpg" alt="TCC" loading="lazy" width="256" height="256"><figcaption>TCC</figcaption></figure><figure class="tile"><img src="img/m-pt.jpg" alt="PortugolTipado" loading="lazy" width="256" height="256"><figcaption>Portugol&shy;Tipado</figcaption></figure><figure class="tile"><img src="img/m-chorty.jpg" alt="Chorty" loading="lazy" width="256" height="256"><figcaption>Chorty</figcaption></figure><figure class="tile"><img src="img/m-typec.jpg" alt="TypeC" loading="lazy" width="256" height="256"><figcaption>TypeC</figcaption></figure><figure class="tile"><img src="img/m-xlang.jpg" alt="XLang" loading="lazy" width="256" height="256"><figcaption>XLang</figcaption></figure><figure class="tile"><img src="img/m-nlpad.jpg" alt="NLPad" loading="lazy" width="256" height="256"><figcaption>NLPad</figcaption></figure><figure class="tile"><img src="img/m-htmlx.jpg" alt="HTMLxEditor" loading="lazy" width="256" height="256"><figcaption>HTMLx&shy;Editor</figcaption></figure><figure class="tile"><img src="img/m-marcpdf.jpg" alt="MarcPDF" loading="lazy" width="256" height="256"><figcaption>MarcPDF</figcaption></figure><figure class="tile"><img src="img/m-botql.jpg" alt="BotQL" loading="lazy" width="256" height="256"><figcaption>BotQL</figcaption></figure><figure class="tile"><img src="img/m-ecosys.jpg" alt="EcoSys" loading="lazy" width="256" height="256"><figcaption>EcoSys</figcaption></figure><figure class="tile"><img src="img/m-adilab.jpg" alt="AdiLab" loading="lazy" width="256" height="256"><figcaption>AdiLab</figcaption></figure></div>
-      <div class="card"><a class="row" href="https://github.com/getnativelayout" target="_blank" rel="noopener">
-        <span class="av"><svg class="i sm brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.15 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.62.24 2.85.12 3.15.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></span>
-        <span class="main"><span class="t" style="font-size:17px">getnativeLayout</span><span class="s">A minha organização</span></span>
-        <svg class="i sm go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6"/></svg>
-      </a></div>
-    </div>
-  </section>
 
-  <section id="sx" class="tab" hidden>
-    <div>
-      <h1>SaldoExpress</h1>
-      <p class="sub">Automatiza os menus USSD da operadora, regista as vendas e gera relatórios em PDF.</p>
-    </div>
-    <div class="stats">
-      <div class="card stat" id="contador" hidden><span class="l"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg><span id="leg">downloads</span></span><strong id="num">0</strong></div>
-      <a class="card stat" href="https://chat.whatsapp.com/GB1VrchQq901wkZtlbdOtC" target="_blank" rel="noopener"><span class="l"><svg class="i sm brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>Comunidade</span><strong class="txt">Entrar</strong></a>
-    </div>
-    <a class="btn dark" href="https://github.com/getnativelayout/SaldoExpress/releases/download/v1.0.0/SaldoExpress.apk" download><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>Baixar para Android</a>
     <div>
       <h2>Capturas</h2>
       <div class="shots"><figure class="shot"><img src="img/sx-5.jpg" alt="Entrada com PIN" loading="lazy" width="540" height="1090"><figcaption>Entrada com PIN</figcaption></figure><figure class="shot"><img src="img/sx-1.jpg" alt="Saldo e atalhos" loading="lazy" width="540" height="1090"><figcaption>Saldo e atalhos</figcaption></figure><figure class="shot"><img src="img/sx-6.jpg" alt="Menu de carregamentos" loading="lazy" width="540" height="1090"><figcaption>Menu de carregamentos</figcaption></figure><figure class="shot"><img src="img/sx-7.jpg" alt="Planos de voz" loading="lazy" width="540" height="1090"><figcaption>Planos de voz</figcaption></figure><figure class="shot"><img src="img/sx-8.jpg" alt="Número do cliente" loading="lazy" width="540" height="1090"><figcaption>Número do cliente</figcaption></figure><figure class="shot"><img src="img/sx-3.jpg" alt="Confirmação antes de enviar" loading="lazy" width="540" height="1090"><figcaption>Confirmação antes de enviar</figcaption></figure><figure class="shot"><img src="img/sx-2.jpg" alt="Vendas do dia" loading="lazy" width="540" height="1090"><figcaption>Vendas do dia</figcaption></figure><figure class="shot"><img src="img/sx-4.jpg" alt="Relatório em PDF" loading="lazy" width="540" height="1090"><figcaption>Relatório em PDF</figcaption></figure></div>
     </div>
+
     <div>
-      <h2>Antes de instalar</h2>
-      <div class="card steps">
-        <div class="note" style="border-bottom:1px solid var(--line)">
-          <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
-          <span>O Android pode mostrar “App bloqueada para proteger o dispositivo”. É normal: o app ainda não está na Play Store. O SaldoExpress guarda o teu ID e a tua senha só no teu telemóvel.</span>
-        </div>
-        <div class="row"><span class="av">1</span><div class="main"><span class="t" style="font-size:17px">Baixar e abrir</span><span class="s">Toca em Baixar e abre o ficheiro.</span></div></div>
-        <div class="row"><span class="av">2</span><div class="main"><span class="t" style="font-size:17px">Instalar mesmo assim</span><span class="s">Se a opção aparecer, toca nela e acabou.</span></div></div>
-        <div class="row"><span class="av">3</span><div class="main"><span class="t" style="font-size:17px">Só há o botão OK?</span><span class="s">Play Store, a tua foto, Play Protect, engrenagem. Desliga “Analisar apps com o Play Protect”.</span></div></div>
-        <div class="row"><span class="av">4</span><div class="main"><span class="t" style="font-size:17px">Volta a ligar</span><span class="s">Depois de instalar, liga outra vez o Play Protect.</span></div></div>
-        <div class="note" style="border-top:1px solid var(--line)">
-          <span>Se a acessibilidade aparecer bloqueada: Definições &gt; Apps &gt; SaldoExpress &gt; menu dos três pontos &gt; <strong>Permitir definições restritas</strong>.</span>
+      <h2>Projetos e parcerias</h2>
+      <div class="card"><a class="row" href="https://github.com/getnativelayout" target="_blank" rel="noopener">
+        <span class="av"><svg class="i sm brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.15 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.62.24 2.85.12 3.15.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></span>
+        <span class="main"><span class="t t17">getnativeLayout</span><span class="s">A minha organização</span></span>
+        <svg class="i sm go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6"/></svg>
+      </a></div>
+      <div class="grid"><figure class="tile"><img src="img/m-saldoexpress.jpg" alt="SaldoExpress" loading="lazy" width="256" height="256"><figcaption>SaldoExpress</figcaption></figure><figure class="tile"><img src="img/m-sire.jpg" alt="SIRE" loading="lazy" width="256" height="256"><figcaption>SIRE</figcaption></figure><figure class="tile"><img src="img/m-p2p.jpg" alt="RondaP2P" loading="lazy" width="256" height="256"><figcaption>RondaP2P</figcaption></figure><figure class="tile"><img src="img/m-apk.jpg" alt="APK Builder" loading="lazy" width="256" height="256"><figcaption>APK Builder</figcaption></figure><figure class="tile"><img src="img/m-rf.jpg" alt="RF" loading="lazy" width="256" height="256"><figcaption>RF</figcaption></figure><figure class="tile"><img src="img/m-tcc.jpg" alt="TCC" loading="lazy" width="256" height="256"><figcaption>TCC</figcaption></figure><figure class="tile"><img src="img/m-pt.jpg" alt="PortugolTipado" loading="lazy" width="256" height="256"><figcaption>Portugol&shy;Tipado</figcaption></figure><figure class="tile"><img src="img/m-chorty.jpg" alt="Chorty" loading="lazy" width="256" height="256"><figcaption>Chorty</figcaption></figure><figure class="tile"><img src="img/m-typec.jpg" alt="TypeC" loading="lazy" width="256" height="256"><figcaption>TypeC</figcaption></figure><figure class="tile"><img src="img/m-xlang.jpg" alt="XLang" loading="lazy" width="256" height="256"><figcaption>XLang</figcaption></figure><figure class="tile"><img src="img/m-nlpad.jpg" alt="NLPad" loading="lazy" width="256" height="256"><figcaption>NLPad</figcaption></figure><figure class="tile"><img src="img/m-htmlx.jpg" alt="HTMLxEditor" loading="lazy" width="256" height="256"><figcaption>HTMLx&shy;Editor</figcaption></figure><figure class="tile"><img src="img/m-marcpdf.jpg" alt="MarcPDF" loading="lazy" width="256" height="256"><figcaption>MarcPDF</figcaption></figure><figure class="tile"><img src="img/m-botql.jpg" alt="BotQL" loading="lazy" width="256" height="256"><figcaption>BotQL</figcaption></figure><figure class="tile"><img src="img/m-ecosys.jpg" alt="EcoSys" loading="lazy" width="256" height="256"><figcaption>EcoSys</figcaption></figure><figure class="tile"><img src="img/m-adilab.jpg" alt="AdiLab" loading="lazy" width="256" height="256"><figcaption>AdiLab</figcaption></figure></div>
+    </div>
+  </section>
+
+  <section id="projetos" class="tab" hidden>
+    <h1>Projetos</h1>
+    <div class="card proj">
+      <img src="img/SaldoExpress.jpg" alt="SaldoExpress" width="720" height="1560" loading="lazy">
+      <div class="proj-b">
+        <h3>SaldoExpress</h3>
+        <p>App Android para vendedores de saldo. Automatiza os menus USSD da operadora (Voucher, Variável, Voz e Dados), regista as vendas e gera relatórios em PDF. O uso é gratuito para agentes com ID verificado.</p>
+        <div class="links">
+          <a class="btn sm" href="https://github.com/getnativelayout/SaldoExpress" target="_blank" rel="noopener"><svg class="i sm brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.15 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.62.24 2.85.12 3.15.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>GitHub</a>
+          <a class="btn sm dark" href="https://github.com/getnativelayout/SaldoExpress/releases/download/v1.0.0/SaldoExpress.apk" download><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>Baixar</a>
         </div>
       </div>
     </div>
-    <div class="card"><a class="row" href="https://github.com/getnativelayout/SaldoExpress" target="_blank" rel="noopener">
-      <span class="av"><svg class="i sm brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.15 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.62.24 2.85.12 3.15.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></span>
-      <span class="main"><span class="t" style="font-size:17px">Código no GitHub</span><span class="s">getnativelayout/SaldoExpress</span></span>
-      <svg class="i sm go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6"/></svg>
-    </a></div>
+    <div class="card proj">
+      <img src="img/SIRE.jpg" alt="SIRE" width="756" height="814" loading="lazy">
+      <div class="proj-b">
+        <h3>SIRE</h3>
+        <p>Sistema de Gestão Financeira Pessoal e coletivo. Aplicativo Android para gestão financeira, para negócios, empresas ou qualquer estabelecimento comercial.</p>
+        <div class="links">
+          <a class="btn sm" href="https://github.com/adilson889/SIRE/" target="_blank" rel="noopener"><svg class="i sm brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.15 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.62.24 2.85.12 3.15.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>GitHub</a>
+          <a class="btn sm" href="https://github.com/adilson889/SIRE/blob/main/README.md" data-readme="adilson889/SIRE@main"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5m-5 4h5"/></svg>Detalhes</a>
+          <a class="btn sm dark" href="https://github.com/adilson889/SIRE/releases/download/v5.2/sire_v5.2_signed.apk"><svg class="i sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0l-4-4m4 4l4-4M5 20h14"/></svg>Baixar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sobre" class="tab" hidden>
+    <h1>Sobre mim</h1>
+    <figure class="fig">
+      <img src="img/sobre-1.jpg" alt="Adilson C. Rafael" width="600" height="800" loading="lazy">
+      <figcaption>Adilson C. Rafael, Desenvolvedor de Software.</figcaption>
+    </figure>
+    <div class="txt">
+      <p class="lead" style="color:var(--fg);margin-bottom:12px">Licenciado em Física. Programador autodidata.</p>
+      <p>Sou do Namibe, Angola. Comecei a programar por curiosidade e pela vontade de resolver problemas reais, e aprendi sozinho, testando, errando e construindo.</p>
+      <p>Faço apps Android e sistemas completos do zero, em Kotlin, Python, JavaScript e HTML/CSS: gestão financeira, plataformas de negócios e automação. Prefiro soluções simples e independentes.</p>
+    </div>
+    <div>
+      <h2>O que faço</h2>
+      <div class="fazer">
+        <div class="card"><h3>Mobile</h3><p>Aplicativos Android nativos em Kotlin.</p></div>
+        <div class="card"><h3>Web</h3><p>Sites e plataformas com JavaScript, HTML e CSS.</p></div>
+        <div class="card"><h3>Automação</h3><p>Ferramentas de automação em Python.</p></div>
+        <div class="card"><h3>Sistemas completos</h3><p>Da gestão financeira às plataformas de negócios, construídos do zero.</p></div>
+      </div>
+    </div>
+    <div>
+      <h2>Formação</h2>
+      <figure class="fig" style="margin-bottom:14px">
+        <img src="img/sobre-2.jpg" alt="Adilson de beca, no dia da formatura, em frente à FCSH" width="720" height="960" loading="lazy">
+        <figcaption>Dia da formatura, em frente à Faculdade de Ciências Sociais e Humanidades.</figcaption>
+      </figure>
+      <div class="card formacao">
+        <span class="rot">Formação académica</span>
+        <strong>Licenciado em Física</strong>
+        <span class="l">Faculdade de Ciências Sociais e Humanidades (FCSH)</span>
+        <span class="l">Universidade do Namibe (UNINBE)</span>
+        <span class="l">2021/22 a 2025/26</span>
+      </div>
+    </div>
   </section>
 
   <section id="contacto" class="tab" hidden>
     <h1>Contacto</h1>
     <div class="card">
-      <a class="row" href="https://wa.me/244921325366" target="_blank" rel="noopener"><span class="av"><svg class="i sm brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg></span><span class="main"><span class="t" style="font-size:17px">WhatsApp</span><span class="s">Falar comigo</span></span><svg class="i sm go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6"/></svg></a>
-      <a class="row" href="https://github.com/adilson889" target="_blank" rel="noopener"><span class="av"><svg class="i sm brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.15 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.62.24 2.85.12 3.15.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></span><span class="main"><span class="t" style="font-size:17px">GitHub</span><span class="s">adilson889</span></span><svg class="i sm go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6"/></svg></a>
-      <a class="row" href="https://www.facebook.com/adilson.cr.50" target="_blank" rel="noopener"><span class="av"><svg class="i sm brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></span><span class="main"><span class="t" style="font-size:17px">Facebook</span><span class="s">Adilson C. Rafael</span></span><svg class="i sm go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6"/></svg></a>
-      <a class="row" href="https://dev.to/adilson_rafael" target="_blank" rel="noopener"><span class="av"><svg class="i sm brand" viewBox="0 0 448 512" aria-hidden="true"><path d="M120.12 208.29c-3.88-2.9-7.77-4.35-11.65-4.35H91.03v104.47h17.45c3.88 0 7.77-1.45 11.65-4.35 3.88-2.9 5.82-7.25 5.82-13.06v-69.65c-.01-5.8-1.95-10.16-5.83-13.06zM399.99 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zM168.14 305.79c0 18.28-11.28 45.61-46.63 45.55h-46.63V172.09h47.98c34.61 0 45.28 27.28 45.28 45.61v88.09zm100.68-88.16h-49.53v45.86h33.64v27.87h-33.64v45.86h49.53v27.87h-63.14c-14.87 0-26.26-11.5-26.26-27.32v-98.32c0-15.82 11.4-27.32 26.26-27.32h63.14v27.87zM384 331.29c-11.05 39.65-53.06 44.85-73.68 39.87v-.05c-26.32-6.35-33.63-32.61-33.63-32.61l30.23-6.62c1.05 5.75 6.14 12.85 15.9 14.79 12.68 2.52 20.29-4.85 20.24-14.9-.05-9.9-11.68-16.35-25.29-19.9-19.7-5.13-38.94-16.66-38.94-42.44 0-25.55 21.18-42.36 44.87-42.05 24.45.32 39.32 15.53 43.68 30.7l-27.63 8.6c-1.9-6.1-8.3-14.4-19.4-14.4-9.5 0-15.3 6.4-15.3 13.5 0 8.5 8.5 12.7 21.6 16.5 24.9 7.3 45 18.5 44.35 48.51z"/></svg></span><span class="main"><span class="t" style="font-size:17px">Dev.to</span><span class="s">adilson_rafael</span></span><svg class="i sm go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6"/></svg></a>
+      <a class="row" href="https://wa.me/244921325366" target="_blank" rel="noopener"><span class="av"><svg class="i sm brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg></span><span class="main"><span class="t t17">WhatsApp</span><span class="s">Falar comigo</span></span><svg class="i sm go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6"/></svg></a>
+      <a class="row" href="https://github.com/adilson889" target="_blank" rel="noopener"><span class="av"><svg class="i sm brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.15 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.62.24 2.85.12 3.15.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></span><span class="main"><span class="t t17">GitHub</span><span class="s">adilson889</span></span><svg class="i sm go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6"/></svg></a>
+      <a class="row" href="https://www.facebook.com/adilson.cr.50" target="_blank" rel="noopener"><span class="av"><svg class="i sm brand" viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></span><span class="main"><span class="t t17">Facebook</span><span class="s">Adilson C. Rafael</span></span><svg class="i sm go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6"/></svg></a>
+      <a class="row" href="https://dev.to/adilson_rafael" target="_blank" rel="noopener"><span class="av"><svg class="i sm brand" viewBox="0 0 448 512" aria-hidden="true"><path d="M120.12 208.29c-3.88-2.9-7.77-4.35-11.65-4.35H91.03v104.47h17.45c3.88 0 7.77-1.45 11.65-4.35 3.88-2.9 5.82-7.25 5.82-13.06v-69.65c-.01-5.8-1.95-10.16-5.83-13.06zM399.99 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zM168.14 305.79c0 18.28-11.28 45.61-46.63 45.55h-46.63V172.09h47.98c34.61 0 45.28 27.28 45.28 45.61v88.09zm100.68-88.16h-49.53v45.86h33.64v27.87h-33.64v45.86h49.53v27.87h-63.14c-14.87 0-26.26-11.5-26.26-27.32v-98.32c0-15.82 11.4-27.32 26.26-27.32h63.14v27.87zM384 331.29c-11.05 39.65-53.06 44.85-73.68 39.87v-.05c-26.32-6.35-33.63-32.61-33.63-32.61l30.23-6.62c1.05 5.75 6.14 12.85 15.9 14.79 12.68 2.52 20.29-4.85 20.24-14.9-.05-9.9-11.68-16.35-25.29-19.9-19.7-5.13-38.94-16.66-38.94-42.44 0-25.55 21.18-42.36 44.87-42.05 24.45.32 39.32 15.53 43.68 30.7l-27.63 8.6c-1.9-6.1-8.3-14.4-19.4-14.4-9.5 0-15.3 6.4-15.3 13.5 0 8.5 8.5 12.7 21.6 16.5 24.9 7.3 45 18.5 44.35 48.51z"/></svg></span><span class="main"><span class="t t17">Dev.to</span><span class="s">adilson_rafael</span></span><svg class="i sm go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6l6 6-6 6"/></svg></a>
     </div>
     <div>
       <h2>Enviar mensagem</h2>
@@ -164,22 +353,14 @@ nav.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bg);b
         <label for="email">Email</label><input class="field" type="email" id="email" required>
         <label for="assunto">Assunto</label><input class="field" type="text" id="assunto" required>
         <label for="mensagem">Mensagem</label><textarea class="field" id="mensagem" required></textarea>
-        <button class="btn dark" type="submit">Enviar mensagem</button>
+        <button class="btn dark full" type="submit">Enviar mensagem</button>
       </form>
     </div>
   </section>
-  </main>
 
+  </main>
   <p class="foot">2026 • adilson889</p>
 </div>
-
-<nav class="bar" aria-label="Navegação principal">
-  <div class="bar-in">
-    <button class="nav" type="button" data-tab="inicio" aria-current="page"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>Início</button>
-    <button class="nav" type="button" data-tab="sx"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/></svg>SaldoExpress</button>
-    <button class="nav" type="button" data-tab="contacto"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-7l-5 4v-4H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>Contacto</button>
-  </div>
-</nav>
 
     <script>
 
@@ -231,27 +412,301 @@ nav.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bg);b
 </script>
 <script>
 (function () {
-    var tabs = ['inicio', 'sx', 'contacto'];
+    var tabs = ['inicio', 'projetos', 'sobre', 'contacto'];
+    var burger = document.getElementById('burger');
+    var menu = document.getElementById('menu');
+    function fechar() { menu.hidden = true; burger.setAttribute('aria-expanded', 'false'); }
     function show(t, rolar) {
         if (tabs.indexOf(t) < 0) t = 'inicio';
         tabs.forEach(function (n) { document.getElementById(n).hidden = n !== t; });
-        document.querySelectorAll('.nav').forEach(function (b) {
+        menu.querySelectorAll('button').forEach(function (b) {
             if (b.getAttribute('data-tab') === t) b.setAttribute('aria-current', 'page');
             else b.removeAttribute('aria-current');
         });
+        fechar();
         if (rolar) window.scrollTo(0, 0);
-        try { history.replaceState(null, '', '#' + t); } catch (e) {}
+        try { history.replaceState(history.state, '', '#' + t); } catch (e) {}
     }
-    document.querySelector('.bar-in').addEventListener('click', function (e) {
-        var b = e.target.closest('.nav');
+    burger.addEventListener('click', function () {
+        var abrir = menu.hidden;
+        menu.hidden = !abrir;
+        burger.setAttribute('aria-expanded', abrir ? 'true' : 'false');
+    });
+    menu.addEventListener('click', function (e) {
+        var b = e.target.closest('button[data-tab]');
         if (b) show(b.getAttribute('data-tab'), true);
     });
     document.addEventListener('click', function (e) {
         var g = e.target.closest('[data-go]');
-        if (g) show(g.getAttribute('data-go'), true);
+        if (g) { show(g.getAttribute('data-go'), true); return; }
+        if (!menu.hidden && !e.target.closest('.top')) fechar();
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !menu.hidden) { fechar(); burger.focus(); }
     });
     window.addEventListener('hashchange', function () { show(location.hash.slice(1), true); });
     show(location.hash.slice(1), false);
+})();
+</script>
+<script>
+(function () {
+    var painel = null, corpo, titulo, pilha = [], seq = 0;
+    var SEP = /^\s*\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)+\|?\s*$/;
+    var BLOCO = /^(#{1,6}\s|```|\s*>|\s*([-*+]|\d+[.)])\s)/;
+
+    function esc(t) {
+        return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function des(t) {
+        return t.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+    }
+    function slug(t) {
+        return t.toLowerCase().replace(/[*_`~]/g, '').replace(/[^\p{L}\p{N}\s-]/gu, '').trim().replace(/\s+/g, '-');
+    }
+    function dirDe(p) {
+        return p.indexOf('/') < 0 ? '' : p.replace(/[^\/]*$/, '');
+    }
+    function resolver(dir, href) {
+        var u = new URL(href, 'https://r.local/' + dir);
+        return decodeURIComponent(u.pathname.replace(/^\//, ''));
+    }
+
+    function linkHtml(txt, href, ctx) {
+        href = href.trim();
+        var m = href.match(/^https?:\/\/github\.com\/([^\/]+\/[^\/]+)\/(blob|tree)\/([^\/]+)\/(.*)$/i);
+        if (m && m[1].toLowerCase() === ctx.repo.toLowerCase() && m[3] === ctx.branch) {
+            var pp = decodeURIComponent(m[4].split('#')[0]);
+            return '<a href="#" data-int="' + esc(pp) + '" data-dir="' + (m[2].toLowerCase() === 'tree' ? 1 : 0) + '">' + txt + '</a>';
+        }
+        if (/^(https?:|mailto:)/i.test(href)) return '<a href="' + esc(href) + '" target="_blank" rel="noopener">' + txt + '</a>';
+        if (href.charAt(0) === '#') return '<a href="#" data-ancora="' + esc(href.slice(1)) + '">' + txt + '</a>';
+        if (/^[a-z][a-z0-9+.-]*:/i.test(href)) return txt;
+        var base = href.split('#')[0];
+        var p = resolver(ctx.dir, base);
+        var dir = /\/$/.test(base) || base === '' || !/\.[a-z0-9]+$/i.test(p);
+        if (!dir && !/\.(md|markdown|txt)$/i.test(p)) {
+            return '<a href="https://github.com/' + ctx.repo + '/blob/' + ctx.branch + '/' + encodeURI(p) + '" target="_blank" rel="noopener">' + txt + '</a>';
+        }
+        return '<a href="#" data-int="' + esc(p) + '" data-dir="' + (dir ? 1 : 0) + '">' + txt + '</a>';
+    }
+
+    function imgHtml(alt, src, ctx) {
+        src = src.trim();
+        var url;
+        if (/^https?:\/\//i.test(src)) url = src;
+        else if (/^[a-z][a-z0-9+.-]*:/i.test(src)) return '';
+        else url = 'https://raw.githubusercontent.com/' + ctx.repo + '/' + ctx.branch + '/' + encodeURI(resolver(ctx.dir, src.split('#')[0]));
+        return '<img src="' + esc(url) + '" alt="' + esc(alt) + '" loading="lazy">';
+    }
+
+    function inline(t, ctx) {
+        var cod = [], guard = [];
+        function g(h) { guard.push(h); return '\u0003' + (guard.length - 1) + '\u0003'; }
+        t = t.replace(/`([^`]+)`/g, function (_, c) { cod.push(c); return '\u0000' + (cod.length - 1) + '\u0000'; });
+        t = esc(t);
+        t = t.replace(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+&quot;.*?&quot;)?\)/g, function (_, a, s) {
+            return g(imgHtml(des(a), des(s), ctx));
+        });
+        t = t.replace(/\[([^\]]+)\]\(([^)\s]+)(?:\s+&quot;.*?&quot;)?\)/g, function (_, a, s) {
+            return g(linkHtml(a, des(s), ctx));
+        });
+        t = t.replace(/(^|[\s(])(https?:\/\/[^\s<)]+)/g, function (_, p, u) {
+            return p + g('<a href="' + u + '" target="_blank" rel="noopener">' + u + '</a>');
+        });
+        t = t.replace(/\*\*([^*]+)\*\*|__([^_]+)__/g, function (_, a, b) { return '<strong>' + (a || b) + '</strong>'; });
+        t = t.replace(/\*([^*\s][^*]*)\*/g, '<em>$1</em>');
+        t = t.replace(/(^|[\s(])_([^_]+)_(?=[\s).,;:!?]|$)/g, '$1<em>$2</em>');
+        t = t.replace(/~~([^~]+)~~/g, '<del>$1</del>');
+        var n = 0;
+        while (/\u0003\d+\u0003/.test(t) && n++ < 5) {
+            t = t.replace(/\u0003(\d+)\u0003/g, function (_, i) { return guard[+i]; });
+        }
+        return t.replace(/\u0000(\d+)\u0000/g, function (_, i) { return '<code>' + esc(cod[+i]) + '</code>'; });
+    }
+
+    function lista(items, ord, ctx) {
+        var tag = ord ? 'ol' : 'ul';
+        return '<' + tag + ' class="md-l">' + items.map(function (it) {
+            return '<li style="margin-left:' + (it.d * 1.3) + 'rem">' + inline(it.t, ctx) + '</li>';
+        }).join('') + '</' + tag + '>';
+    }
+
+    function blocos(md, ctx) {
+        var L = md.split('\n'), out = [], i = 0;
+        while (i < L.length) {
+            var l = L[i], m;
+            if (/^```/.test(l)) {
+                var b = [];
+                i++;
+                while (i < L.length && !/^```/.test(L[i])) { b.push(L[i]); i++; }
+                i++;
+                out.push('<pre><code>' + esc(b.join('\n')) + '</code></pre>');
+                continue;
+            }
+            if ((m = l.match(/^(#{1,6})\s+(.*?)\s*#*\s*$/))) {
+                var n = m[1].length;
+                out.push('<h' + n + ' id="' + esc(slug(m[2])) + '">' + inline(m[2], ctx) + '</h' + n + '>');
+                i++;
+                continue;
+            }
+            if (/^\s*([-*_])\s*(\1\s*){2,}$/.test(l)) { out.push('<hr>'); i++; continue; }
+            if (/^\s*>/.test(l)) {
+                var q = [];
+                while (i < L.length && /^\s*>/.test(L[i])) { q.push(L[i].replace(/^\s*>\s?/, '')); i++; }
+                out.push('<blockquote>' + blocos(q.join('\n'), ctx) + '</blockquote>');
+                continue;
+            }
+            if (l.indexOf('|') > -1 && i + 1 < L.length && SEP.test(L[i + 1])) {
+                var cel = function (r) { return r.replace(/^\s*\|/, '').replace(/\|\s*$/, '').split('|'); };
+                var th = cel(l).map(function (c) { return '<th>' + inline(c.trim(), ctx) + '</th>'; }).join('');
+                i += 2;
+                var rows = [];
+                while (i < L.length && L[i].trim() && L[i].indexOf('|') > -1) {
+                    rows.push('<tr>' + cel(L[i]).map(function (c) { return '<td>' + inline(c.trim(), ctx) + '</td>'; }).join('') + '</tr>');
+                    i++;
+                }
+                out.push('<div class="md-tab"><table><thead><tr>' + th + '</tr></thead><tbody>' + rows.join('') + '</tbody></table></div>');
+                continue;
+            }
+            if ((m = l.match(/^(\s*)([-*+]|\d+[.)])\s+(.*)$/))) {
+                var items = [], ord = /\d/.test(m[2]);
+                while (i < L.length) {
+                    var m2 = L[i].match(/^(\s*)([-*+]|\d+[.)])\s+(.*)$/);
+                    if (m2) { items.push({ d: Math.floor(m2[1].length / 2), t: m2[3] }); i++; }
+                    else if (items.length && /^\s+\S/.test(L[i])) { items[items.length - 1].t += ' ' + L[i].trim(); i++; }
+                    else break;
+                }
+                out.push(lista(items, ord, ctx));
+                continue;
+            }
+            if (!l.trim()) { i++; continue; }
+            var p = [];
+            while (i < L.length && L[i].trim() && !BLOCO.test(L[i]) && !(L[i].indexOf('|') > -1 && i + 1 < L.length && SEP.test(L[i + 1]))) {
+                p.push(L[i]);
+                i++;
+            }
+            if (!p.length) { p.push(L[i]); i++; }
+            out.push('<p>' + inline(p.join(' '), ctx) + '</p>');
+        }
+        return out.join('\n');
+    }
+
+    function markdown(md, ctx) {
+        md = md.replace(/\r/g, '');
+        var partes = md.split(/(^```[^\n]*\n[\s\S]*?^```[ \t]*$)/m);
+        for (var k = 0; k < partes.length; k += 2) {
+            partes[k] = partes[k]
+                .replace(/<!--[\s\S]*?-->/g, '')
+                .replace(/<img\b[^>]*>/gi, function (m) {
+                    var s = (m.match(/src\s*=\s*["']([^"']+)["']/i) || [])[1];
+                    var a = (m.match(/alt\s*=\s*["']([^"']*)["']/i) || [])[1] || '';
+                    return s ? '![' + a + '](' + s + ')' : '';
+                })
+                .replace(/<br\s*\/?>/gi, '\n')
+                .replace(/<\/?[a-z][^>]*>/gi, '');
+        }
+        return blocos(partes.join(''), ctx);
+    }
+
+    function criar() {
+        painel = document.createElement('div');
+        painel.className = 'md-painel';
+        painel.innerHTML = '<div class="md-topo"><button type="button" class="md-voltar" aria-label="Voltar"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></button>' +
+            '<span class="md-titulo"></span><button type="button" class="md-fechar" aria-label="Fechar"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>' +
+            '<div class="md-corpo"></div>';
+        document.body.appendChild(painel);
+        corpo = painel.querySelector('.md-corpo');
+        titulo = painel.querySelector('.md-titulo');
+        painel.querySelector('.md-voltar').onclick = function () { history.back(); };
+        painel.querySelector('.md-fechar').onclick = function () {
+            if (pilha.length) history.go(-pilha.length); else fechar();
+        };
+        corpo.addEventListener('click', function (e) {
+            var a = e.target.closest ? e.target.closest('a') : null;
+            if (!a) return;
+            if (a.dataset.int !== undefined) {
+                e.preventDefault();
+                ir(a.dataset.int, a.dataset.dir === '1');
+            } else if (a.dataset.ancora !== undefined) {
+                e.preventDefault();
+                var alvo = a.dataset.ancora.toLowerCase();
+                var els = corpo.querySelectorAll('[id]');
+                for (var j = 0; j < els.length; j++) {
+                    if (els[j].id === alvo) { els[j].scrollIntoView(); break; }
+                }
+            }
+        });
+    }
+
+    function fechar() {
+        if (painel) painel.classList.remove('aberto');
+        pilha = [];
+    }
+
+    function abrir(repo, branch) {
+        if (!painel) criar();
+        pilha = [{ repo: repo, branch: branch, path: 'README.md', dir: false }];
+        history.pushState({ nl: 1 }, '');
+        painel.classList.add('aberto');
+        carregar();
+    }
+
+    function ir(path, dir) {
+        var a = pilha[pilha.length - 1];
+        pilha.push({ repo: a.repo, branch: a.branch, path: path, dir: dir });
+        history.pushState({ nl: pilha.length }, '');
+        carregar();
+    }
+
+    function erro(a) {
+        corpo.innerHTML = '<p class="md-info">Não foi possível carregar o conteúdo.</p>' +
+            '<p><a href="https://github.com/' + a.repo + '/blob/' + a.branch + '/' + encodeURI(a.path) + '" target="_blank" rel="noopener">Abrir no GitHub</a></p>';
+    }
+
+    function carregar() {
+        var a = pilha[pilha.length - 1], id = ++seq;
+        titulo.textContent = a.repo.split('/')[1] + (a.path && a.path !== 'README.md' ? ' / ' + a.path : '');
+        corpo.innerHTML = '<p class="md-info">A carregar...</p>';
+        corpo.scrollTop = 0;
+        if (a.dir) {
+            fetch('https://api.github.com/repos/' + a.repo + '/contents/' + encodeURI(a.path) + '?ref=' + encodeURIComponent(a.branch))
+                .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+                .then(function (lst) {
+                    if (id !== seq) return;
+                    lst.sort(function (x, y) { return (x.type === 'dir' ? 0 : 1) - (y.type === 'dir' ? 0 : 1) || x.name.localeCompare(y.name); });
+                    corpo.innerHTML = '<ul class="md-l md-pasta">' + lst.map(function (f) {
+                        if (f.type === 'dir') return '<li><a href="#" data-int="' + esc(f.path) + '" data-dir="1">' + esc(f.name) + '/</a></li>';
+                        if (/\.(md|markdown|txt)$/i.test(f.name)) return '<li><a href="#" data-int="' + esc(f.path) + '" data-dir="0">' + esc(f.name) + '</a></li>';
+                        return '<li><a href="' + esc(f.html_url) + '" target="_blank" rel="noopener">' + esc(f.name) + '</a></li>';
+                    }).join('') + '</ul>';
+                })
+                .catch(function () { if (id === seq) erro(a); });
+            return;
+        }
+        fetch('https://raw.githubusercontent.com/' + a.repo + '/' + a.branch + '/' + encodeURI(a.path))
+            .then(function (r) { if (!r.ok) throw 0; return r.text(); })
+            .then(function (txt) {
+                if (id !== seq) return;
+                if (/\.(md|markdown)$/i.test(a.path)) corpo.innerHTML = markdown(txt, { repo: a.repo, branch: a.branch, dir: dirDe(a.path) });
+                else corpo.innerHTML = '<pre><code>' + esc(txt) + '</code></pre>';
+            })
+            .catch(function () { if (id === seq) erro(a); });
+    }
+
+    window.addEventListener('popstate', function (e) {
+        if (!painel || !painel.classList.contains('aberto')) return;
+        var n = (e.state && e.state.nl) || 0;
+        if (n < 1 || n > pilha.length) fechar();
+        else { pilha.length = n; carregar(); }
+    });
+
+    document.addEventListener('click', function (e) {
+        var a = e.target.closest ? e.target.closest('a[data-readme]') : null;
+        if (!a) return;
+        e.preventDefault();
+        var p = a.getAttribute('data-readme').split('@');
+        abrir(p[0], p[1] || 'main');
+    });
 })();
 </script>
 <script>
